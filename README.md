@@ -44,7 +44,7 @@ Generate a random hypergraph and run the model:
 ```bash
 python random_simulation.py
 ```
-- Customize: e.g.,
+- Customize: e.g., adjusting `latency_dist`
 ```bash
 python random_simulation.py --q=2.0 --latency_dist=exponential --mu=5
 ```
@@ -55,14 +55,14 @@ Requires `sentimentdataset.csv` (included, from Kaggle sentiment analysis datase
 python real_world_simulation.py
 ```
 - Supports CSV, Parquet, JSON formats.
-- Customize: e.g.,
+- Customize: e.g., having a dataset named `data.json`
 ```bash
-python real_world_simulation.py --file_path=mydata.json --format_type=json --q=1.0
+python real_world_simulation.py --file_path=data.json --format_type=json --q=1.0
 ```
 
 Outputs include plots for diversity, cascade size, and oscillatory behavior.
 
-## Model Parameters
+### Model Parameters for adjusting
 - `q`: Nonlinearity parameter (>1 accelerates consensus, <1 prolongs diversity).
 - `latency_dist`: 'normal' (mu, sigma) or 'exponential' (lambda_param).
 - `consensus_threshold`: Fraction for consensus (default 0.8).
