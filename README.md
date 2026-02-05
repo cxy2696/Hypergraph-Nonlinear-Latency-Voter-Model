@@ -36,7 +36,7 @@ Run: `python random_simulation.py`
 git clone https://github.com/cxy2696/Hypergraph-Nonlinear-Latency-Voter-Model.git
 cd Hypergraph-Nonlinear-Latency-Voter-Model
 python -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
+source venv/bin/activate  # Mac/Linux: source venv/bin/activate | Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
