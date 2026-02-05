@@ -1,0 +1,4 @@
+# Core dependencies for the HNL Voter Model
+numpy==1.26.4  # For numerical operations and arrays
+pandas==2.2.0  # For data loading and processing (e.g., CSV/Parquet/JSON)
+matplotlib==3.8.3  # For plotting metrics (diversity, cascades, oscillations)
