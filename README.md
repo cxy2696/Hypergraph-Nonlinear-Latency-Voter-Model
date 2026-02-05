@@ -29,8 +29,6 @@ Full paper: [HNL Voter Model.pdf](HNL%20Voter%20Model.pdf) (From the paper: Init
 - Install: `sudo apt install python3.12 python3.12-venv` (Ubuntu).
 - Venv: `python -m venv venv && source venv/bin/activate`
 
-Install deps: `pip install -r requirements.txt`
-Run: `python random_simulation.py`
 
 ```bash
 git clone https://github.com/cxy2696/Hypergraph-Nonlinear-Latency-Voter-Model.git
