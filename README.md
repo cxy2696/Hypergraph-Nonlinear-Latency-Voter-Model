@@ -16,6 +16,22 @@ Key features:
 Full paper: [HNL Voter Model.pdf](HNL%20Voter%20Model.pdf) (From the paper: Initializes random opinions, selects pairs, copies opinions, and checks for consensus.)
 
 ## Installation
+### Mac
+- Install Python: `brew install python@3.12`
+- Alias: `echo 'alias python=python3' >> ~/.zshrc && source ~/.zshrc`
+- Venv: `python -m venv venv && source venv/bin/activate`
+
+### Windows
+- Install Python from python.org (add to PATH).
+- Venv: `python -m venv venv && venv\Scripts\activate.bat`
+
+### Linux
+- Install: `sudo apt install python3.12 python3.12-venv` (Ubuntu).
+- Venv: `python -m venv venv && source venv/bin/activate`
+
+Install deps: `pip install -r requirements.txt`
+Run: `python random_simulation.py`
+
 ```bash
 git clone https://github.com/cxy2696/Hypergraph-Nonlinear-Latency-Voter-Model.git
 cd Hypergraph-Nonlinear-Latency-Voter-Model
