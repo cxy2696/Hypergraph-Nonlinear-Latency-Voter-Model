@@ -44,7 +44,10 @@ Generate a random hypergraph and run the model:
 ```bash
 python random_simulation.py
 ```
-- Customize: e.g., `python random_simulation.py --q=2.0 --latency_dist=exponential --mu=5`
+- Customize: e.g.,
+```bash
+python random_simulation.py --q=2.0 --latency_dist=exponential --mu=5
+```
 
 ### Real-World Simulation
 Requires `sentimentdataset.csv` (included, from Kaggle sentiment analysis dataset):
@@ -52,7 +55,10 @@ Requires `sentimentdataset.csv` (included, from Kaggle sentiment analysis datase
 python real_world_simulation.py
 ```
 - Supports CSV, Parquet, JSON formats.
-- Customize: e.g., `python real_world_simulation.py --file_path=mydata.json --format_type=json --q=1.0`
+- Customize: e.g.,
+```bash
+python real_world_simulation.py --file_path=mydata.json --format_type=json --q=1.0
+```
 
 Outputs include plots for diversity, cascade size, and oscillatory behavior.
 
