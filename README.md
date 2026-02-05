@@ -46,8 +46,5 @@ Outputs include plots for diversity, cascade size, and oscillatory behavior.
 - `consensus_threshold`: Fraction for consensus (default 0.8).
 - `max_steps`: Maximum simulation steps (default 100).
 
-## License
-MIT
-
 
 
