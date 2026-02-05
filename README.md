@@ -19,6 +19,8 @@ Full paper: [HNL Voter Model.pdf](HNL%20Voter%20Model.pdf) (From the paper: Init
 ```bash
 git clone https://github.com/cxy2696/Hypergraph-Nonlinear-Latency-Voter-Model.git
 cd Hypergraph-Nonlinear-Latency-Voter-Model
+python -m venv venv
+source venv/bin/activate  # Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
