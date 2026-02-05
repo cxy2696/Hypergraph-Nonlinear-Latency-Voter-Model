@@ -46,14 +46,6 @@ Outputs include plots for diversity, cascade size, and oscillatory behavior.
 - `consensus_threshold`: Fraction for consensus (default 0.8).
 - `max_steps`: Maximum simulation steps (default 100).
 
-## Citation
-If you use this code, please cite the original paper:
-@article{hnl_voter_model,
-title = {Hypergraph-Nonlinear-Latency Voter Model},
-author = {Xinyi Cui and Leyi Yan and Ruiying Cai and Chaowei Xiao},
-year = {2024}
-}
-
 ## License
 MIT
 
