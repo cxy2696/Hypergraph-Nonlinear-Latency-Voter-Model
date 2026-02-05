@@ -2,3 +2,4 @@
 numpy==1.26.4  # For numerical operations and arrays
 pandas==2.2.0  # For data loading and processing (e.g., CSV/Parquet/JSON)
 matplotlib==3.8.3  # For plotting metrics (diversity, cascades, oscillations)
+pyarrow==15.0.0  # Required for future pandas 3.0; enables efficient Parquet/Arrow backend
