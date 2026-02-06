@@ -73,6 +73,7 @@ class HNLVoterModel:
         axs[2].plot(oscillation)
         axs[2].set_title("Oscillatory Behavior (Average Opinion) over Time")
         plt.tight_layout()
+        plt.savefig('hnl_voter_metrics.png')
         plt.show()
 
 def load_data(file_path, format_type=None, sentiment_col='Sentiment', user_col='User', hashtags_col='Hashtags', retweets_col='Retweets', likes_col='Likes'):
@@ -107,7 +108,16 @@ def load_data(file_path, format_type=None, sentiment_col='Sentiment', user_col='
     influence_weights = engagement.reindex(nodes).fillna(0.1).values / engagement.max()
 
     def map_sentiment(s):
-        return 1 if isinstance(s, str) and s.lower() == 'positive' else 0
+        negative_sentiments = [
+            'anger', 'fear', 'sadness', 'disgust', 'disappointed', 'bitter', 'confusion', 'shame',
+            'despair', 'grief', 'loneliness', 'jealousy', 'resentment', 'frustration', 'boredom',
+            'anxiety', 'intimidation', 'helplessness', 'envy', 'regret', 'indifference', 'numbness',
+            'melancholy', 'nostalgia', 'ambivalence', 'overwhelmed', 'bittersweet', 'pensive',
+            'heartbreak', 'isolation', 'disappointment', 'betrayal', 'suffering', 'emotionalstorm', 'lostlove', 'negative'
+        ]
+        if isinstance(s, str) and s.lower() in negative_sentiments:
+            return 0
+        return 1
 
     user_opinion = df.groupby(user_col)[sentiment_col].first().apply(map_sentiment)
     opinions = user_opinion.reindex(nodes).fillna(0).values.astype(int)
