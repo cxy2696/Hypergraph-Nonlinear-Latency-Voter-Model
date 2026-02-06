@@ -13,7 +13,7 @@ Key features:
 - Latency distributions: normal (default) or exponential.
 
 ## Paper
-Full paper: [HNL Voter Model.pdf]([HNL%20Voter%20Model.pdf](https://cxy2696.github.io/Hypergraph-Nonlinear-Latency-Voter-Model/HNL%20Voter%20Model.pdf) (From the paper: Initializes random opinions, selects pairs, copies opinions, and checks for consensus.)
+Full paper: [HNL Voter Model.pdf](https://cxy2696.github.io/Hypergraph-Nonlinear-Latency-Voter-Model/HNL%20Voter%20Model.pdf) (From the paper: Initializes random opinions, selects pairs, copies opinions, and checks for consensus.)
 
 ## Installation
 ### Mac
