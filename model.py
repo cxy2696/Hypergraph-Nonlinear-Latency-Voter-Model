@@ -65,7 +65,7 @@ class HNLVoterModel:
         diversity = [h["diversity"] for h in self.history]
         cascade_size = [h["cascade_size"] for h in self.history]
         oscillation = [h["oscillation"] for h in self.history]
-        fig, axs = plt.subplots(3, 1, figsize=(10, 15))
+        fig, axs = plt.subplots(1, 3, figsize=(15, 5))
         axs[0].plot(diversity)
         axs[0].set_title("Opinion Diversity over Time")
         axs[1].plot(cascade_size)
