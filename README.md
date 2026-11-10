@@ -24,6 +24,25 @@ service-ready implementation of the same model family, see
 
 The original scripts here remain unchanged so the paper's results can still be reproduced.
 
+## Try the demo
+The successor project includes a browser sandbox:
+
+[![OpinionLab demo](https://raw.githubusercontent.com/cxy2696/opinionlab/main/docs/demo.png)](https://github.com/cxy2696/opinionlab/blob/main/docs/DEMO.md)
+
+- Choose one of the 12 scenario templates and tune conformity `q`, latency and replicas.
+- Inspect diversity curves and group metrics with 95% confidence intervals.
+- Download a single-file offline report with assumptions, limitations and disclaimer.
+
+Run it locally:
+
+```bash
+git clone https://github.com/cxy2696/opinionlab.git
+cd opinionlab
+make demo          # http://127.0.0.1:8000
+```
+
+See [docs/DEMO.md](https://github.com/cxy2696/opinionlab/blob/main/docs/DEMO.md) for the API and limits.
+
 ## Paper
 Full paper: [Hypergraph-Nonlinear-Latency Voter Model.pdf](https://cxy2696.github.io/Hypergraph-Nonlinear-Latency-Voter-Model/HNL%20Voter%20Model.pdf) (From the paper: Initializes random opinions, selects pairs, copies opinions, and checks for consensus.)
 
