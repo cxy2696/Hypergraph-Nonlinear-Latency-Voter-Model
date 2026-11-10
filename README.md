@@ -12,6 +12,18 @@ Key features:
 - Supports random hypergraphs or real-world data (from Kaggle sentiment datasets).
 - Latency distributions: normal (default) or exponential.
 
+## Production successor
+This repository is the research prototype accompanying the paper. For a reproducible,
+service-ready implementation of the same model family, see
+**[OpinionLab](https://github.com/cxy2696/opinionlab)**. OpinionLab adds:
+
+- node-centric, order-independent updates (the prototype's hyperedge loop is order-dependent),
+- deterministic RNG streams, run manifests and golden baselines,
+- CSR-vectorised and event-driven engines with Monte-Carlo confidence intervals,
+- a CLI/REST service, compliance guardrails and offline HTML reports.
+
+The original scripts here remain unchanged so the paper's results can still be reproduced.
+
 ## Paper
 Full paper: [Hypergraph-Nonlinear-Latency Voter Model.pdf](https://cxy2696.github.io/Hypergraph-Nonlinear-Latency-Voter-Model/HNL%20Voter%20Model.pdf) (From the paper: Initializes random opinions, selects pairs, copies opinions, and checks for consensus.)
 
