@@ -39,9 +39,11 @@ The original manuscript remains at the repository root as
 ## Notes
 
 - The paper reports a re-analysis, not a new model. Section III fixes the
-  specification; Section IV proves the component-wise absorbing-state result;
+  specification; Section IV proves the component-wise absorbing-state result and
+the exact complete-hypergraph theorem (Theorem 1);
   Section VI reports the paired experiments.
 - All numerical claims in the paper are traceable to `../results/` and the
   manifest in `../results/manifest.json`.
+- The paper is 12 pages; the test suite is 54 checks.
 - The paper uses the same dataset as the original report (CC0; see
   `../docs/DATA.md`).

@@ -80,12 +80,14 @@ tests/               unit, property and conformance tests for the paper's equati
 conformance/         shared numerical fixture used by both repositories
 docs/                model specification, errata, data note, results, conformance
 results/             raw runs, trajectories, tables, manifest
-figures/             generated figures (PNG and PDF)
+figures/             PNG figures used by docs (PDF variants are local)
 paper/               revised manuscript source, figures, tables, compiled PDF
 model.py             v1-compatible API
 random_simulation.py, real_world_simulation.py   v1-compatible entry points
 sentimentdataset.csv CC0 dataset (732 posts)
 ```
+
+The generated artifacts are `results/`, `figures/`, `paper/figures/` and `paper/tables/`; the source of truth is `hnl/`, `paper/main.tex`, `paper/refs.bib`, and `docs/`. The generated files are committed so that a reader can audit a number without rerunning the model, and `python -m hnl.cli reproduce` recreates them from the committed code.
 
 The package is small on purpose. The simulation engine is in `hnl/model.py`;
 the hypergraph structure is in `hnl/hypergraph.py`; the dataset pipeline is in
@@ -163,7 +165,7 @@ to catch a drift in that shared part.
   author  = {Cui, Xinyi and Yan, Leyi and Cai, Ruiying and Xiao, Chaowei},
   title   = {Hypergraph--Nonlinear--Latency Voter Model},
   year    = {2026},
-  version = {2.3.0},
+  version = {2.3.1},
   url     = {https://github.com/cxy2696/Hypergraph-Nonlinear-Latency-Voter-Model},
   note    = {Research code and reproducibility package}
 }

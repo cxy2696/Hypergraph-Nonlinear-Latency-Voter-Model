@@ -18,7 +18,7 @@ from .config import ModelConfig, LATENCY_DISTS, UPDATE_RULES
 from .hypergraph import Hypergraph
 from .model import HNLVoterModel, SimulationResult
 
-__version__ = "2.3.0"
+__version__ = "2.3.1"
 
 __all__ = [
     "HNLVoterModel",

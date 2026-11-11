@@ -17,6 +17,10 @@ htmlcov/
 # macOS
 .DS_Store
 
+# Generated figure variants: the PNGs are used by docs, the paper uses PDFs.
+figures/*.pdf
+paper/figures/*.png
+
 # Local scratch output (the committed results/ and figures/ are intentional)
 hnl_voter_metrics.png
 

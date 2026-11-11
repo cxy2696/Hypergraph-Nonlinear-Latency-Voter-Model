@@ -4,7 +4,7 @@ PYTHON ?= python
 
 help:
 	@echo "make install    install runtime dependencies"
-	@echo "make test       run the test suite (47 tests)"
+	@echo "make test       run the test suite (54 checks)"
 	@echo "make reproduce  full experiments, tables and figures (~30 s)"
 	@echo "make quick      quick smoke reproduction (5 replicates)"
 	@echo "make diagnose   structural report for the shipped dataset"

@@ -4,6 +4,21 @@ All notable changes to this repository are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow
 [Semantic Versioning](https://semver.org/).
 
+## [2.3.1] — 2026-11-12
+
+### Changed
+
+- Removed unused vector copies `figures/*.pdf` and PNG copies under
+  `paper/figures/`. The docs use the root PNGs; the paper uses the vector PDFs.
+  Both generated variants remain local and are ignored by git.
+- Fixed the stale test count in the `Makefile` help (54 checks).
+- `paper/README.md` now mentions Theorem 1 and the 12-page length.
+- Added a short source-versus-generated note to the README.
+
+### Unchanged
+
+- No model, result, or paper-content change.
+
 ## [2.3.0] — 2026-11-12
 
 ### Added
