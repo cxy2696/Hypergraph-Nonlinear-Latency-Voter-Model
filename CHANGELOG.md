@@ -4,6 +4,27 @@ All notable changes to this repository are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow
 [Semantic Versioning](https://semver.org/).
 
+## [2.2.0] — 2026-11-12
+
+### Changed
+
+- Repository documentation is English-only. The bilingual README index and the
+  Chinese README were removed so that there is one canonical description of the
+  model.
+- Added `docs/RELATIONSHIP.md`, which states the division between this research
+  repository and the OpinionLab engineering repository.
+- Added `docs/CONFORMANCE.md` and `conformance/binary_case.json`, a shared
+  numerical fixture with three binary cases. The same fixture is checked by
+  OpinionLab, so a drift in the shared kernel fails in both repositories.
+- Added `tests/test_conformance.py`; the test suite is now 50 checks.
+- Rewrote the README in a plainer voice: what the paper reports, what is in the
+  repository, and what the code does not claim.
+
+### Unchanged
+
+- The engine, the result files, and the run manifest are unchanged from 2.1.0.
+  The paper PDF was rebuilt only to keep the test count accurate.
+
 ## [2.1.0] — 2026-11-12
 
 ### Added

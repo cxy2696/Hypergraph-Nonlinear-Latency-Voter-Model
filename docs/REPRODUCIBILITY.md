@@ -10,7 +10,7 @@ and `figures/` directories.
 ```bash
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
-python -m pytest                       # 47 tests
+python -m pytest                       # 50 checks (47 unit + 3 conformance)
 python -m hnl.cli reproduce --root .   # ≈30 s on an Apple-silicon laptop
 ```
 
@@ -141,4 +141,6 @@ python -c "from model import load_data; print(load_data('sentimentdataset.csv')[
 - [x] Dataset licence and SHA-256 recorded.
 - [x] Original prototype preserved under a tag.
 - [x] Every claim in `RESULTS.md` is backed by a committed table or CSV.
+- [x] A shared numerical fixture with OpinionLab checks the common binary kernel.
+- [x] Documentation is English-only, with no duplicate language editions.
 - [x] Null results and limitations reported, not hidden.
