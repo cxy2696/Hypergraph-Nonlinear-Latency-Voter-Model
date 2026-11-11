@@ -191,6 +191,7 @@ reproducibility. The sentiment → binary opinion mapping is documented in
 | [`docs/REPRODUCIBILITY.md`](docs/REPRODUCIBILITY.md) | seeds, commands, environment, manifest, CI |
 | [`results/TABLES.md`](results/TABLES.md) | all generated tables |
 | [`HNL Voter Model.pdf`](https://cxy2696.github.io/Hypergraph-Nonlinear-Latency-Voter-Model/HNL%20Voter%20Model.pdf) | original manuscript |
+| [`paper/HNL_Voter_Model_v2.pdf`](paper/HNL_Voter_Model_v2.pdf) | revised edition: corrected theory, paired experiments, full tables |
 
 ## Citation
 

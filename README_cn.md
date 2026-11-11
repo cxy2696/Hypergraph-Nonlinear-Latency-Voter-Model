@@ -150,6 +150,7 @@ python -m pytest
 | [`docs/REPRODUCIBILITY.md`](docs/REPRODUCIBILITY.md) | 种子、命令、环境、清单、CI |
 | [`results/TABLES.md`](results/TABLES.md) | 全部生成表格 |
 | [`HNL Voter Model.pdf`](https://cxy2696.github.io/Hypergraph-Nonlinear-Latency-Voter-Model/HNL%20Voter%20Model.pdf) | 原始论文 |
+| [`paper/HNL_Voter_Model_v2.pdf`](paper/HNL_Voter_Model_v2.pdf) | 修订版：修正理论、配对实验与完整表格 |
 
 ## 引用
 

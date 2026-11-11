@@ -4,7 +4,9 @@
 > study and not an empirical validation. Every number below is produced by
 > `python -m hnl.cli reproduce` from the seeds and files in this repository;
 > the full tables are in [`results/TABLES.md`](../results/TABLES.md) and the
-> raw runs in [`results/`](../results). The manuscript PDF is unchanged; this
+> raw runs in [`results/`](../results). A revised manuscript that synthesises
+> these results is [`paper/HNL_Voter_Model_v2.pdf`](../paper/HNL_Voter_Model_v2.pdf).
+> The original manuscript PDF is unchanged; this
 > document reports what the model actually does under a controlled design.
 
 ## 1. Claim ledger
@@ -32,7 +34,7 @@ are obtained from the same uniforms by inverse CDF, and every $(q,\text{latency}
 cell runs on that replicate. All contrasts are therefore paired: a difference
 compares the same graph, initial condition and latency quantiles.
 
-**Inference.** Percentile bootstrap 95 % CIs (4 000 resamples), two-sided paired
+**Inference.** Percentile bootstrap 95 % CIs (2 000 resamples), two-sided paired
 sign-flip permutation tests (10 000 permutations), Holm adjustment within each
 latency stratum, Cliff's $\delta$ as effect size. Consensus times are
 right-censored at $T$; cells are summarised by the Kaplan–Meier estimator and

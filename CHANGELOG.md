@@ -4,6 +4,22 @@ All notable changes to this repository are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow
 [Semantic Versioning](https://semver.org/).
 
+## [2.1.0] — 2026-11-12
+
+### Added
+
+- Revised manuscript `paper/HNL_Voter_Model_v2.pdf` with LaTeX source,
+  vector figures, generated tables, and build instructions.
+  It fixes the specification, proves the component-wise absorbing-state
+  result, and reports the paired 30-replicate experiments.
+- Cross-links to the revised edition from the README files and `docs/RESULTS.md`.
+
+### Changed
+
+- Version metadata to 2.1.0. The engine, tests, results, and manifest are
+  unchanged from 2.0.0; the manuscript is a documentation artifact built from
+  the same committed result files.
+
 ## [2.0.0] — 2026-11-12
 
 ### Added

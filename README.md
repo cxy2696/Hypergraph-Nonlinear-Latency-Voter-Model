@@ -3,7 +3,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](pyproject.toml)
 [![tests](https://github.com/cxy2696/Hypergraph-Nonlinear-Latency-Voter-Model/actions/workflows/ci.yml/badge.svg)](https://github.com/cxy2696/Hypergraph-Nonlinear-Latency-Voter-Model/actions/workflows/ci.yml)
-[![version](https://img.shields.io/badge/version-2.0.0-informational.svg)](CHANGELOG.md)
+[![version](https://img.shields.io/badge/version-2.1.0-informational.svg)](CHANGELOG.md)
 
 **中文** · [English](README_en.md) · [完整中文说明](README_cn.md)
 
@@ -93,6 +93,7 @@ threshold is the wrong target for this graph.
 | [`docs/REPRODUCIBILITY.md`](docs/REPRODUCIBILITY.md) | environment, seeds, commands, manifest, CI |
 | [`results/TABLES.md`](results/TABLES.md) | all generated tables |
 | [`HNL Voter Model.pdf`](https://cxy2696.github.io/Hypergraph-Nonlinear-Latency-Voter-Model/HNL%20Voter%20Model.pdf) | the original manuscript (unchanged) |
+| [`paper/HNL_Voter_Model_v2.pdf`](paper/HNL_Voter_Model_v2.pdf) | revised edition: corrected theory, paired experiments, full tables |
 
 ## Repository layout
 
