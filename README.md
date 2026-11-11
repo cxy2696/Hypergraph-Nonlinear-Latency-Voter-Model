@@ -48,7 +48,8 @@ The successor project includes a browser sandbox:
 
 - Choose one of the 15 scenario templates (public communication, community, organizational change, product launch, research) and tune conformity `q`, latency and replicas.
 - Read three linked charts: diversity with a run-to-run band, opinion shares and cascade spikes.
-- Get a one-sentence verdict and a plain-language “how to read” note, then replay the evolution step by step.
+- Get a one-sentence verdict, a plain-language “how to read” note and a **decision brief**: what the run can inform, the simulated action window (take-off, peak, majority, intervention) and concrete follow-up checks.
+- Replay the evolution step by step.
 - Download a single-file offline report with assumptions, limitations and disclaimer.
 
 Run it locally:
