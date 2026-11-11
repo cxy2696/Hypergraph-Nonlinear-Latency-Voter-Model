@@ -1,0 +1,31 @@
+cff-version: 1.2.0
+message: "If you use this software or the re-analysis, please cite it as below."
+title: "Hypergraph-Nonlinear-Latency Voter Model"
+abstract: >-
+  Reference implementation and reproducibility package for the Hybrid
+  Hypergraph-Nonlinear-Latency voter model: group interactions on hypergraphs,
+  a nonlinear adoption exponent, and heterogeneous reaction latencies.
+  Version 2 fixes the prototype, adds tests, and re-examines the manuscript's
+  claims with a paired, fully seeded design.
+authors:
+  - family-names: Cui
+    given-names: Xinyi
+  - family-names: Yan
+    given-names: Leyi
+  - family-names: Cai
+    given-names: Ruiying
+  - family-names: Xiao
+    given-names: Chaowei
+type: software
+license: MIT
+version: 2.0.0
+date-released: "2026-11-12"
+repository-code: "https://github.com/cxy2696/Hypergraph-Nonlinear-Latency-Voter-Model"
+url: "https://github.com/cxy2696/Hypergraph-Nonlinear-Latency-Voter-Model"
+keywords:
+  - opinion dynamics
+  - voter model
+  - hypergraph
+  - nonlinear influence
+  - latency
+  - reproducibility

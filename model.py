@@ -1,133 +1,102 @@
-import pandas as pd
+"""Backward-compatible entry points for the v1 prototype API.
+
+The implementation lives in :mod:`hnl`.  The class and functions below keep the
+names and call signatures used by the original scripts, so old code such as::
+
+    from model import HNLVoterModel, load_data
+
+continues to work.  Behavioural differences from v1 are documented in
+``docs/ERRATA.md``; the original code is preserved at tag ``v1.0-legacy``.
+"""
+
+from __future__ import annotations
+
+from pathlib import Path
+from typing import Optional, Sequence
+
 import numpy as np
-import random
-from collections import defaultdict
-import os
 
-class HNLVoterModel:
-    def __init__(self, nodes, hyperedges, influence_weights, q=1.5, latency_dist='normal', mu=5, sigma=2, lambda_param=None, consensus_threshold=0.8):
-        self.nodes = nodes
-        self.hyperedges = hyperedges
-        self.influence_weights = influence_weights
-        self.q = q
-        self.consensus_threshold = consensus_threshold
-        self.opinions = np.random.choice([0, 1], size=len(nodes))  # Default random opinions
-        self.last_change_time = np.zeros(len(nodes))
-        self.time_step = 0
-        self.history = []
-        n = len(nodes)
-        if latency_dist == 'normal':
-            self.latencies = np.maximum(1, np.random.normal(mu, sigma, n)).astype(int)
-        elif latency_dist == 'exponential':
-            if lambda_param is None:
-                lambda_param = 1 / mu if mu > 0 else 1
-            self.latencies = np.maximum(1, np.random.exponential(1 / lambda_param, n)).astype(int)
-        else:
-            raise ValueError("latency_dist must be 'normal' or 'exponential'")
+from hnl.config import ModelConfig
+from hnl.data import build_dataset
+from hnl.model import HNLVoterModel, SimulationResult
 
-    def update_opinions(self):
-        new_opinions = self.opinions.copy()
-        for hyperedge in self.hyperedges:
-            hyperedge = np.array(hyperedge)
-            mask0 = (self.opinions[hyperedge] == 0)
-            mask1 = (self.opinions[hyperedge] == 1)
-            s0 = np.sum(self.influence_weights[hyperedge] * mask0)
-            s1 = np.sum(self.influence_weights[hyperedge] * mask1)
-            denom = s0**self.q + s1**self.q
-            p1 = s1**self.q / denom if denom > 0 else 0.5
-            for node in hyperedge:
-                if self.time_step - self.last_change_time[node] >= self.latencies[node]:
-                    new_opinion = 1 if random.random() < p1 else 0
-                    if new_opinion != self.opinions[node]:
-                        new_opinions[node] = new_opinion
-                        self.last_change_time[node] = self.time_step
-        self.opinions = new_opinions
+__all__ = [
+    "HNLVoterModel",
+    "SimulationResult",
+    "ModelConfig",
+    "load_data",
+    "run_model_from_file",
+]
 
-    def run_simulation(self, max_steps=100):
-        self.history = []
-        prev_opinions = self.opinions.copy()
-        for self.time_step in range(1, max_steps + 1):
-            self.update_opinions()
-            cascade_size = np.sum(self.opinions != prev_opinions) / len(self.nodes)
-            prev_opinions = self.opinions.copy()
-            n0 = np.sum(self.opinions == 0)
-            n1 = np.sum(self.opinions == 1)
-            diversity = 1 - max(n0, n1) / len(self.nodes)
-            oscillation = np.mean(self.opinions)
-            self.history.append({"diversity": diversity, "cascade_size": cascade_size, "oscillation": oscillation})
-            majority = max(n0, n1) / len(self.nodes)
-            if majority >= self.consensus_threshold:
-                break
-        return self.history
 
-    def plot_metrics(self):
-        import matplotlib.pyplot as plt
-        diversity = [h["diversity"] for h in self.history]
-        cascade_size = [h["cascade_size"] for h in self.history]
-        oscillation = [h["oscillation"] for h in self.history]
-        fig, axs = plt.subplots(1, 3, figsize=(15, 5))
-        axs[0].plot(diversity)
-        axs[0].set_title("Opinion Diversity over Time")
-        axs[1].plot(cascade_size)
-        axs[1].set_title("Cascade Size over Time")
-        axs[2].plot(oscillation)
-        axs[2].set_title("Oscillatory Behavior (Average Opinion) over Time")
-        plt.tight_layout()
-        plt.savefig('hnl_voter_metrics.png')
-        plt.show()
+def load_data(
+    file_path: str,
+    format_type: Optional[str] = None,
+    sentiment_col: str = "Sentiment",
+    user_col: str = "User",
+    hashtags_col: str = "Hashtags",
+    retweets_col: str = "Retweets",
+    likes_col: str = "Likes",
+):
+    """Load a post table into ``(nodes, hyperedges, influence_weights, opinions)``.
 
-def load_data(file_path, format_type=None, sentiment_col='Sentiment', user_col='User', hashtags_col='Hashtags', retweets_col='Retweets', likes_col='Likes'):
-    if format_type is None:
-        _, ext = os.path.splitext(file_path)
-        format_type = ext.lstrip('.').lower()
-
-    if format_type == 'csv':
-        df = pd.read_csv(file_path)
-    elif format_type == 'parquet':
-        df = pd.read_parquet(file_path)
-    elif format_type == 'json':
-        df = pd.read_json(file_path, lines=True)
-    else:
-        raise ValueError("Unsupported format. Supported: csv, parquet, json")
-
-    nodes = df[user_col].unique()
-    n = len(nodes)
-    node_to_index = {user: i for i, user in enumerate(nodes)}
-
-    hashtag_groups = defaultdict(list)
-    for _, row in df.iterrows():
-        if pd.isna(row[hashtags_col]):
-            continue
-        hashtags = str(row[hashtags_col]).split()
-        for h in hashtags:
-            hashtag_groups[h].append(node_to_index[row[user_col]])
-    hyperedges = [group for group in hashtag_groups.values() if len(group) > 1]
-
-    df['Engagement'] = df[retweets_col].fillna(0) + df[likes_col].fillna(0)
-    engagement = df.groupby(user_col)['Engagement'].mean()
-    influence_weights = engagement.reindex(nodes).fillna(0.1).values / engagement.max()
-
-    def map_sentiment(s):
-        negative_sentiments = [
-            'anger', 'fear', 'sadness', 'disgust', 'disappointed', 'bitter', 'confusion', 'shame',
-            'despair', 'grief', 'loneliness', 'jealousy', 'resentment', 'frustration', 'boredom',
-            'anxiety', 'intimidation', 'helplessness', 'envy', 'regret', 'indifference', 'numbness',
-            'melancholy', 'nostalgia', 'ambivalence', 'overwhelmed', 'bittersweet', 'pensive',
-            'heartbreak', 'isolation', 'disappointment', 'betrayal', 'suffering', 'emotionalstorm', 'lostlove', 'negative'
-        ]
-        if isinstance(s, str) and s.lower() in negative_sentiments:
-            return 0
-        return 1
-
-    user_opinion = df.groupby(user_col)[sentiment_col].first().apply(map_sentiment)
-    opinions = user_opinion.reindex(nodes).fillna(0).values.astype(int)
-
+    Sentiment labels are whitespace-normalised and mapped through the documented
+    valence lexicon.  Users whose labels are all ambiguous receive opinion 0;
+    see :func:`hnl.data.build_dataset` for the explicit, non-filling API.
+    """
+    bundle = build_dataset(
+        file_path,
+        mapping="valence",
+        scope="full",
+        fmt=format_type,
+        user_col=user_col,
+        sentiment_col=sentiment_col,
+        hashtags_col=hashtags_col,
+        retweet_col=retweets_col,
+        like_col=likes_col,
+    )
+    nodes = np.asarray(bundle.labels)
+    hyperedges = [edge.tolist() for edge in bundle.hypergraph.edge_list]
+    influence_weights = bundle.hypergraph.node_weights
+    opinions = bundle.valence.copy()
+    opinions[opinions < 0] = 0
     return nodes, hyperedges, influence_weights, opinions
 
-def run_model_from_file(file_path, format_type=None, q=1.5, latency_dist='normal', mu=5, sigma=2, lambda_param=None, consensus_threshold=0.8, max_steps=100):
+
+def run_model_from_file(
+    file_path: str,
+    format_type: Optional[str] = None,
+    q: float = 1.5,
+    latency_dist: str = "normal",
+    mu: float = 5.0,
+    sigma: float = 2.0,
+    lambda_param: Optional[float] = None,
+    consensus_threshold: float = 0.8,
+    max_steps: int = 100,
+    update_rule: str = "node_mean",
+    seed: Optional[int] = None,
+    init: str = "data",
+    plot: bool = True,
+    plot_path: str = "hnl_voter_metrics.png",
+):
+    """Load a file, run the model and return the per-step history."""
     nodes, hyperedges, influence_weights, opinions = load_data(file_path, format_type)
-    model = HNLVoterModel(nodes, hyperedges, influence_weights, q=q, latency_dist=latency_dist, mu=mu, sigma=sigma, lambda_param=lambda_param, consensus_threshold=consensus_threshold)
-    model.opinions = opinions
+    model = HNLVoterModel(
+        nodes,
+        hyperedges,
+        influence_weights,
+        q=q,
+        latency_dist=latency_dist,
+        mu=mu,
+        sigma=sigma,
+        lambda_param=lambda_param,
+        consensus_threshold=consensus_threshold,
+        update_rule=update_rule,
+        seed=seed,
+        initial_opinions=opinions if init == "data" else None,
+        max_steps=max_steps,
+    )
     history = model.run_simulation(max_steps=max_steps)
-    model.plot_metrics()
+    if plot:
+        model.plot_metrics(plot_path)
     return history

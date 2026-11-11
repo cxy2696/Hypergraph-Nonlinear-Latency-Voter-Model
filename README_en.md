@@ -1,145 +1,214 @@
-# Hypergraph-Nonlinear-Latency Voter Model
+# Hypergraph–Nonlinear–Latency Voter Model (v2.0.0)
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](pyproject.toml)
+[![tests](https://github.com/cxy2696/Hypergraph-Nonlinear-Latency-Voter-Model/actions/workflows/ci.yml/badge.svg)](https://github.com/cxy2696/Hypergraph-Nonlinear-Latency-Voter-Model/actions/workflows/ci.yml)
+
+**English** · [中文](README_cn.md) · [index](README.md)
 
 ## Overview
-This repository is the research prototype for the **Hybrid Hypergraph-Nonlinear-Latency Voter Model (HNL Voter Model)** — a way to simulate how opinions spread through groups.
 
-Most opinion models treat people as talking in pairs and reacting instantly. This one adds three things that matter in real life:
-- people influence each other in **groups** (a chat, a forum, a meeting) rather than only one-to-one;
-- adoption is **non-linear** — conformity strength `q` controls how strongly a local majority pulls people in;
-- people react at **different speeds**, so a message can keep spreading long after it was posted.
+This repository is the reference implementation and reproducibility package for
+the **Hybrid Hypergraph–Nonlinear–Latency (HNL) voter model**. The model asks
+how opinions spread when people influence each other in groups (hyperedges),
+when adoption is a nonlinear function of the local majority (exponent `q`), and
+when different people react after different delays (`L_i`).
 
-The prototype accompanies the paper below. For new work, use the production successor, [OpinionLab](https://github.com/cxy2696/opinionlab), which is reproducible, tested and ships a browser sandbox.
- 
-> The Voter Model has long served as a fundamental framework for analyzing opinion dynamics, however, it often oversimplifies interactions as pairwise and assumes immediate responses. This study introduces the Hybrid Hypergraph-Nonlinear-Latency Voter Model (HNL Voter Model), which integrates group-based hypergraph structures, nonlinear adoption probabilities, and latency effects to better reflect the complexity of real-world opinion propagation. By simulating sentiment data from social media platforms, the model explores how network structures, nonlinear influences, and temporal delays collectively shape opinion diversity, cascading effects, and oscillatory behaviors.
+Version 2 keeps the model family but fixes the prototype and re-examines its
+claims with a controlled, fully seeded design. The original manuscript PDF and
+the v1 scripts are preserved (tag `v1.0-legacy`); they are not modified.
 
-Key features:
-- Simulates opinion diversity, cascading effects, and oscillations.
-- Supports random hypergraphs or real-world data (from Kaggle sentiment datasets).
-- Latency distributions: normal (default) or exponential.
+## Headline findings
 
-## What you can use it for
-The same model covers many group-opinion questions:
-- **Crisis communication:** when should we debunk a rumor, and how much does timing change the outcome?
-- **Community discussion:** is a group converging on a decision, or being pushed into a silent majority?
-- **Organizational change:** how do announcement cadence and reaction delays affect sentiment?
-- **Product launch / brand:** is early buzz the same as durable word of mouth?
-- **Teaching and research:** demonstrate how conformity and latency change consensus, or reproduce the classical voter-model limit.
+The full evidence, with confidence intervals and all tables, is in
+[`docs/RESULTS.md`](docs/RESULTS.md).
 
-The successor project makes these concrete with 15 bilingual scenario templates, runnable examples and a browser demo.
+| manuscript claim | v2 verdict |
+|---|---|
+| Higher `q` accelerates consensus | **supported**: 0 % consensus at `q=0.5` vs 87–100 % at `q=2.5` (30 paired replicates) |
+| High latency variance prolongs diversity | **only at `q=0.5`**: +0.024 to +0.054 final diversity; null at `q=1.5` |
+| Moderate `q` + high variance produces sustained oscillations | **not supported**: `O` is highest at `q=2.5`; late/early amplitude ratio 0.11–0.43 |
+| Higher `q` produces larger cascades | **opposite**: max cascade falls from 0.43 to 0.35 |
+| Validation on social-media sentiment data | **not supported**: 0 of 900 dataset runs reach 80 %; no longitudinal data |
 
-## Production successor
-This repository is the research prototype accompanying the paper. For a reproducible,
-service-ready implementation of the same model family, see
-**[OpinionLab](https://github.com/cxy2696/opinionlab)**. OpinionLab adds:
+A new analytical result explains the dataset findings: the absorbing states of
+the process are **component-wise consensus states**, not only global consensus
+(Proposition 1 in [`docs/MODEL.md`](docs/MODEL.md)). A fragmented hypergraph
+therefore freezes into a mosaic; population-wide consensus is not the right
+target. On the shipped hashtag graph (260 components, largest 20.9 % of nodes),
+the model reaches 80 % in none of the 900 runs across the full, active and
+data-initialised variants, and the largest final majority is 0.754.
 
-- node-centric, order-independent updates (the prototype's hyperedge loop is order-dependent),
-- deterministic RNG streams, run manifests and golden baselines,
-- CSR-vectorised and event-driven engines with Monte-Carlo confidence intervals,
-- a CLI/REST service, compliance guardrails and offline HTML reports.
+![Opinion diversity on random hypergraphs](figures/fig1_diversity.png)
 
-The original scripts here remain unchanged so the paper's results can still be reproduced.
+## What this repository is — and is not
 
-## Try the demo
-Open the live sandbox: **https://cxy2696.github.io/opinionlab/**
+**Is:** a stochastic model of binary opinion change, a tested implementation,
+a set of reproducible numerical experiments, and a documented audit of the
+original prototype.
 
-The successor project also ships a local browser sandbox:
+**Is not:** an empirical validation on social media, a forecasting tool, a
+model of recommendation or media effects, or a replacement for the manuscript.
+The dataset supplies a group structure, not a ground truth.
 
-[![OpinionLab demo](https://raw.githubusercontent.com/cxy2696/opinionlab/main/docs/demo.png)](https://github.com/cxy2696/opinionlab/blob/main/docs/DEMO.md)
+## Model in brief
 
-- Choose one of the 15 scenario templates (public communication, community, organizational change, product launch, research) and tune conformity `q`, latency and replicas.
-- Watch a 3D industrial tracker: a rotating opinion network with target lock, scan sweep and live telemetry.
-- Switch the whole UI between Chinese and English from the header.
-- Tune `q`, latency and replicas with inline explanations, hover tips and one-click presets.
-- Optionally enable a local Ollama model for assistive narration and next-experiment suggestions (off by default, never used for metrics or conclusions).
-- Read three linked charts with particle overlays: diversity flow, drifting opinion shares and cascade bursts.
-- The cockpit-style layout adapts to desktop, tablet and phone, with a system status bar and live UTC clock.
-- Get a one-sentence verdict, a plain-language “how to read” note and a **decision brief**: what the run can inform, the simulated action window (take-off, peak, majority, intervention) and concrete follow-up checks.
-- Replay the evolution step by step.
-- Download a single-file offline report with assumptions, limitations and disclaimer.
+For a hypergraph `(V, E)`, node weights `α_i > 0`, and binary opinions `X_i`:
 
-Run it locally:
+$$
+S_x(e)=\sum_{j\in e}\alpha_j\,\mathbf 1[X_j=x],
+\qquad
+\pi_e=\frac{S_1(e)^q}{S_0(e)^q+S_1(e)^q}.
+$$
 
-```bash
-git clone https://github.com/cxy2696/opinionlab.git
-cd opinionlab
-make demo          # http://127.0.0.1:8000
-```
+A node aggregates the kernels of its incident hyperedges (`node_mean` by
+default), is eligible when `t − T_i ≥ L_i`, and samples
+`X_i(t+1) ~ Bernoulli(P_i)`. The three aggregation rules, the exact algorithm,
+the absorbing-state proposition and the mean-field analysis (`f'(1/2)=q`, a
+transition at `q=1`) are in [`docs/MODEL.md`](docs/MODEL.md).
 
-See [docs/DEMO.md](https://github.com/cxy2696/opinionlab/blob/main/docs/DEMO.md) for the API and limits.
-
-## Concrete examples
-The successor repository has runnable examples and a case guide:
-
-- [Debunk timing](https://github.com/cxy2696/opinionlab/blob/main/examples/rumor_timing.py):
-  `uv run python examples/rumor_timing.py --repeats 8`
-- [Community conformity](https://github.com/cxy2696/opinionlab/blob/main/examples/community_consensus.py):
-  `uv run python examples/community_consensus.py --repeats 6`
-- [Use cases and reading guide](https://github.com/cxy2696/opinionlab/blob/main/docs/USE_CASES.md)
-
-## Scope and limitations
-This repository is a paper prototype: results depend on hyperedge order and use global random state.
-It is kept for reference and reproduction. For anything beyond that — reproducible runs,
-confidence intervals, API/reporting, compliance guardrails — use OpinionLab.
-The model does not predict real individuals or events, and it does not model recommender
-systems, media agenda or offline behaviour.
-
-## Paper
-Full paper: [Hypergraph-Nonlinear-Latency Voter Model.pdf](https://cxy2696.github.io/Hypergraph-Nonlinear-Latency-Voter-Model/HNL%20Voter%20Model.pdf) (From the paper: Initializes random opinions, selects pairs, copies opinions, and checks for consensus.)
-
-## Installation
-### Mac
-- Install Python: `brew install python@3.12`
-- Alias: `echo 'alias python=python3' >> ~/.zshrc && source ~/.zshrc`
-- Venv: `python -m venv venv && source venv/bin/activate`
-
-### Windows
-- Install Python from python.org (add to PATH).
-- Venv: `python -m venv venv && venv\Scripts\activate.bat`
-
-### Linux
-- Install: `sudo apt install python3.12 python3.12-venv` (Ubuntu).
-- Venv: `python -m venv venv && source venv/bin/activate`
-
+## Install
 
 ```bash
 git clone https://github.com/cxy2696/Hypergraph-Nonlinear-Latency-Voter-Model.git
 cd Hypergraph-Nonlinear-Latency-Voter-Model
-python -m venv venv
-source venv/bin/activate  # Mac/Linux: source venv/bin/activate | Windows: venv\Scripts\activate
+python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
+Python ≥ 3.10; NumPy, pandas and matplotlib are the only runtime dependencies.
+The package can also be installed with `pip install -e .`.
+
 ## Usage
-### Random Simulation
-Generate a random hypergraph and run the model:
+
+### Single run
+
 ```bash
-python random_simulation.py
-```
-- Customize: e.g., adjusting `latency_dist`
-```bash
-python random_simulation.py --q=2.0 --latency_dist=exponential --mu=5
+python -m hnl.cli simulate --q 1.5 --latency normal --sigma 2 --seed 42
+python -m hnl.cli simulate --preset dataset --scope active --init data --q 2.0
 ```
 
-### Real-World Simulation
-Requires `sentimentdataset.csv` (included, from Kaggle sentiment analysis dataset):
-```bash
-python real_world_simulation.py
+The command prints a JSON summary (consensus time, censoring flag, final
+diversity, oscillation index, cascade size, mean latency).
+
+### Python API
+
+```python
+import numpy as np
+from hnl import HNLVoterModel, ModelConfig
+from hnl.hypergraph import random_hypergraph
+
+hg = random_hypergraph(100, 200, (3, 6), np.random.default_rng(0))
+cfg = ModelConfig(q=2.0, latency_dist="normal", mu=5, sigma=2,
+                  consensus_threshold=0.8, max_steps=100)
+result = HNLVoterModel.from_hypergraph(hg, cfg, seed=42).run()
+
+print(result.consensus_time, result.censored, result.final_diversity)
+print(result.oscillation_index, result.max_cascade)
 ```
-- Supports CSV, Parquet, JSON formats.
-- Customize: e.g., having a dataset named `data.json`
+
+### Reproduce the paper-style study
+
 ```bash
-python real_world_simulation.py --file_path=data.json --format_type=json --q=1.0
+python -m hnl.cli reproduce --root .          # ≈30 s, full 30-replicate design
+python -m hnl.cli reproduce --root . --quick  # 5 replicates, smoke test
 ```
 
-Outputs include plots for diversity, cascade size, and oscillatory behavior.
+This writes `results/` (raw runs, tables, manifest) and `figures/` (PNG + PDF).
 
-### Model Parameters for adjusting
-- `q`: Nonlinearity parameter (>1 accelerates consensus, <1 prolongs diversity).
-- `latency_dist`: 'normal' (mu, sigma) or 'exponential' (lambda_param).
-- `consensus_threshold`: Fraction for consensus (default 0.8).
-- `max_steps`: Maximum simulation steps (default 100).
+### Dataset diagnostics
 
+```bash
+python -m hnl.cli diagnose --csv sentimentdataset.csv --scope full
+```
 
+Reports users, hyperedges, coverage, connected components, component sizes,
+sentiment-mapping coverage and a structural implication.
 
+### Backward-compatible v1 entry points
+
+```bash
+python random_simulation.py --q 2.0 --latency_dist exponential --mu 5
+python real_world_simulation.py --q 1.0 --init random --seed 42
+```
+
+`model.py` still exposes `HNLVoterModel`, `load_data` and
+`run_model_from_file` with the v1 signatures.
+
+## Results at a glance
+
+![Consensus incidence](figures/fig2_consensus_km.png)
+
+![Dataset dynamics](figures/fig6_dataset_dynamics.png)
+
+* **Nonlinearity.** The `q` effect is the robust part of the model. On connected
+  random hypergraphs, 80 % consensus is reached in 0 % of runs at `q=0.5` and
+  87–100 % at `q=2.5`; the paired difference in final diversity is −0.195 to
+  −0.282 (Holm-adjusted `p = 3×10⁻⁴`, the permutation resolution floor).
+* **Latency.** The variance effect is real only near balance: at `q=0.5` it
+  adds +0.024 to +0.054 final diversity; at `q=1.5` all contrasts are null
+  after Holm; at `q=2.5` the exponential distribution reduces diversity.
+* **Oscillations.** `O = sd(X̄(t))` grows with `q`, and the late/early amplitude
+  ratio falls to 0.11–0.43 at `q=2.5`. Swings are damped transients, not limit
+  cycles.
+* **Cascades.** The largest single-sweep change is smaller at high `q`; low `q`
+  keeps the system near balance and produces larger cascades.
+* **Dataset.** The hashtag graph is fragmented (260 components; largest 20.9 %
+  of nodes). 0 of 900 runs reach 80 %; components freeze internally; the
+  stable diversity is an absorbing mosaic.
+* **Update rule.** The literal edge sweep of the manuscript's Algorithm 1
+  reaches consensus in 0 of 8 runs at `T=100`, while `node_mean` and
+  `node_sample` reach it in 75–100 % at `q≥1.5`. On a smaller graph the edge
+  sweep does absorb, but much more slowly (median 25 vs 10 sweeps).
+
+## Tests and CI
+
+```bash
+python -m pytest
+```
+
+47 tests cover the kernel, node aggregation, absorbing states, latency gating,
+RNG reproducibility, edge-order invariance, metrics (Kaplan–Meier, RMST,
+damping), statistics (bootstrap, permutation, Holm) and the dataset pipeline.
+GitHub Actions runs the tests and a quick reproduction on every push.
+
+## Data
+
+`sentimentdataset.csv` is the Kaggle *Social Media Sentiments Analysis
+Dataset* (Kashish Parmar, **CC0**), 732 posts, 670 user identifiers after
+whitespace normalisation, 191 emotion labels. It is included for
+reproducibility. The sentiment → binary opinion mapping is documented in
+[`docs/DATA.md`](docs/DATA.md); it is a modelling choice, not a gold standard.
+
+## Documentation
+
+| document | content |
+|---|---|
+| [`docs/MODEL.md`](docs/MODEL.md) | formal specification, three update rules, propositions, mean-field |
+| [`docs/ERRATA.md`](docs/ERRATA.md) | every v1 defect and every unsupported claim, with evidence |
+| [`docs/DATA.md`](docs/DATA.md) | provenance, schema, cleaning, lexicon, structural statistics, limits |
+| [`docs/RESULTS.md`](docs/RESULTS.md) | full re-analysis and claim ledger |
+| [`docs/REPRODUCIBILITY.md`](docs/REPRODUCIBILITY.md) | seeds, commands, environment, manifest, CI |
+| [`results/TABLES.md`](results/TABLES.md) | all generated tables |
+| [`HNL Voter Model.pdf`](https://cxy2696.github.io/Hypergraph-Nonlinear-Latency-Voter-Model/HNL%20Voter%20Model.pdf) | original manuscript |
+
+## Citation
+
+```bibtex
+@software{hnl_voter_model_2026,
+  author  = {Cui, Xinyi and Yan, Leyi and Cai, Ruiying and Xiao, Chaowei},
+  title   = {Hypergraph--Nonlinear--Latency Voter Model (v2.0.0)},
+  year    = {2026},
+  url     = {https://github.com/cxy2696/Hypergraph-Nonlinear-Latency-Voter-Model},
+  note    = {Reference implementation and reproducibility package}
+}
+```
+
+## Licence and scope
+
+MIT for the code; CC0 for the dataset. The model is a research prototype and
+does not predict real individuals or events. The manuscript remains the
+original artifact; the v2 documents are a re-analysis, not a new paper.
+
+The successor project [OpinionLab](https://github.com/cxy2696/opinionlab)
+provides a service-oriented engine for applied work.

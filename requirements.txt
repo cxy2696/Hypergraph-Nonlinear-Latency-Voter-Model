@@ -1,5 +1,10 @@
-# Core dependencies for the HNL Voter Model
-numpy==1.26.4  # For numerical operations and arrays
-pandas==2.2.0  # For data loading and processing (e.g., CSV/Parquet/JSON)
-matplotlib==3.8.3  # For plotting metrics (diversity, cascades, oscillations)
-pyarrow==15.0.0  # Required for future pandas 3.0; enables efficient Parquet/Arrow backend
+# Runtime dependencies for the HNL voter model (v2).
+# Tested with NumPy 2.5.4, pandas 3.1.1, matplotlib 3.11.2 on Python 3.13.
+# Ranges are compatible with Python 3.10+; pin exact versions if you need
+# bit-for-bit replication of a specific run (see docs/REPRODUCIBILITY.md).
+numpy>=1.26,<3
+pandas>=2.2,<4
+matplotlib>=3.8,<4
+
+# Optional: Parquet input support for `hnl.data.read_posts`
+# pyarrow>=15
