@@ -49,6 +49,8 @@ The successor project also ships a local browser sandbox:
 [![OpinionLab demo](https://raw.githubusercontent.com/cxy2696/opinionlab/main/docs/demo.png)](https://github.com/cxy2696/opinionlab/blob/main/docs/DEMO.md)
 
 - Choose one of the 15 scenario templates (public communication, community, organizational change, product launch, research) and tune conformity `q`, latency and replicas.
+- Watch a 3D industrial tracker: a rotating opinion network with target lock, scan sweep and live telemetry.
+- Switch the whole UI between Chinese and English from the header.
 - Tune `q`, latency and replicas with inline explanations, hover tips and one-click presets.
 - Read three linked charts: diversity with a run-to-run band, opinion shares and cascade spikes.
 - Get a one-sentence verdict, a plain-language “how to read” note and a **decision brief**: what the run can inform, the simulated action window (take-off, peak, majority, intervention) and concrete follow-up checks.
