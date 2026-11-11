@@ -12,6 +12,8 @@
 \newcommand{\Prob}{\mathbb{P}}
 \newcommand{\N}{\mathcal{N}}
 \newcommand{\dd}{\mathrm{d}}
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}{Corollary}
 
 \title{Hypergraph--Nonlinear--Latency Voter Model:\\
 Corrected Semantics and a Reproducible Reassessment}
@@ -28,7 +30,7 @@ Corrected Semantics and a Reproducible Reassessment}
 \maketitle
 
 \begin{abstract}
-Group interaction, nonlinear conformity, and heterogeneous reaction delays are three plausible ingredients of opinion dynamics. An earlier project combined them into a hypergraph--nonlinear--latency (HNL) voter model and reported simulations on social-media sentiment data. We rebuilt that model, audited the released code, and reran the experiments under a paired design with 30 replicates per cell. The rebuild exposed two implementation defects and one conceptual one: a data pipeline had mapped every post to the same opinion, the update rule depended on the order of the hyperedge list, and, more consequentially, the absorbing states of the model had been assumed to be global consensus. On a disconnected hypergraph they are component-wise consensus states, so a fragmented graph freezes into a mosaic rather than converging. We fixed the pipeline and the update, made the absorbing structure explicit, and replaced visual comparisons with bootstrap intervals, paired permutation tests, Holm correction, and censoring-aware summaries. Under this design the nonlinearity claim survives: an 80\% majority is reached in none of the runs at $q=0.5$ and in 87--100\% of the runs at $q=2.5$. The latency-variance claim holds only at low $q$, oscillations are damped transients rather than sustained cycles, and larger $q$ produces smaller cascades, not larger ones. On the Kaggle hashtag graph, none of 900 runs reaches 80\%; the largest final majority is 0.754. The durable result is the nonlinear mechanism, not the three-way narrative that originally framed it.
+Group interaction, nonlinear conformity, and heterogeneous reaction delays are three plausible ingredients of opinion dynamics. An earlier project combined them into a hypergraph--nonlinear--latency (HNL) voter model and reported simulations on social-media sentiment data. We rebuilt that model, audited the released code, and reran the experiments under a paired design with 30 replicates per cell. The rebuild exposed two implementation defects and one conceptual one: a data pipeline had mapped every post to the same opinion, the update rule depended on the order of the hyperedge list, and, more consequentially, the absorbing states of the model had been assumed to be global consensus. On a disconnected hypergraph they are component-wise consensus states, so a fragmented graph freezes into a mosaic rather than converging. We fixed the pipeline and the update, made the absorbing structure explicit, and replaced visual comparisons with bootstrap intervals, paired permutation tests, Holm correction, and censoring-aware summaries. On the complete hypergraph we also obtain an exact finite-$n$ reduction: at $q=1$ the opinion share is a martingale, so the consensus probability equals the initial share. Under this design the nonlinearity claim survives: an 80\% majority is reached in none of the runs at $q=0.5$ and in 87--100\% of the runs at $q=2.5$. The latency-variance claim holds only at low $q$, oscillations are damped transients rather than sustained cycles, and larger $q$ produces smaller cascades, not larger ones. On the Kaggle hashtag graph, none of 900 runs reaches 80\%; the largest final majority is 0.754. The durable result is the nonlinear mechanism, not the three-way narrative that originally framed it.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -43,12 +45,13 @@ The baseline is also easy to criticise. Real influence is rarely pairwise: peopl
 
 This paper reports what happened when we rebuilt that model and checked those conclusions. The rebuild was not a matter of cleaning up notation. The released code contained a sentiment-mapping bug that assigned the same opinion to every post, a random initialisation step that discarded the data-derived opinions, duplicate node identifiers inside hyperedges, and an update loop whose result depended on the order in which hyperedges happened to be stored. Some of these are ordinary implementation defects. One is more consequential: the model's absorbing states had been assumed to be global consensus, whereas on a disconnected hypergraph they are component-wise consensus states. A fragmented graph therefore does not converge to one opinion; it freezes into a mosaic, and the global majority is set by how the components happen to break. That distinction changes how the dataset results should be read.
 
-We kept the model family and changed the parts that determine what its numbers mean. Section~III gives a precise specification with three aggregation rules: a node-centred mean (the default), a node-centred sample, and the literal edge sweep of the original pseudocode. Section~IV proves the absorbing-state result, derives the mean-field transition at $q=1$, and explains why latency can delay but not sustain an oscillation. Section~V describes a paired design with common random numbers, 30 replicates per cell, and inference that respects censoring. Section~VI reports the results. The short version is that the nonlinear mechanism survives and the other three claims do not: latency variance matters only near balance, the observed oscillations damp, cascades shrink as $q$ grows, and the Kaggle graph cannot support a population-level consensus experiment at all.
+We kept the model family and changed the parts that determine what its numbers mean. Section~III gives a precise specification with three aggregation rules: a node-centred mean (the default), a node-centred sample, and the literal edge sweep of the original pseudocode. Section~IV proves the absorbing-state result, gives an exact finite-$n$ reduction for the complete hypergraph, derives the mean-field transition at $q=1$, and explains why latency can delay but not sustain an oscillation. Section~V describes a paired design with common random numbers, 30 replicates per cell, and inference that respects censoring. Section~VI reports the results. The short version is that the nonlinear mechanism survives and the other three claims do not: latency variance matters only near balance, the observed oscillations damp, cascades shrink as $q$ grows, and the Kaggle graph cannot support a population-level consensus experiment at all.
 
 The contribution is therefore a correction and a reassessment, not a new model. We make four concrete contributions:
 \begin{enumerate}
 \item a specification and reference implementation that are order independent and seeded, together with the three update rules needed to compare the original algorithm with the intended node-centred process;
 \item a characterisation of the absorbing set of the process, including the $2^{C}$ mosaic count and the implications for fragmented graphs;
+\item an exact finite-$n$ reduction on the complete hypergraph, including the $q=1$ martingale and the neutral Wright--Fisher limit;
 \item a paired reanalysis of the original claims, with confidence intervals, effect sizes, and censoring-aware consensus times;
 \item a reproducibility package in which every reported number is generated by one command and tied to a commit, a parameter set, and a data hash.
 \end{enumerate}
@@ -163,8 +166,43 @@ The probability of global consensus on a fragmented graph depends on how the com
 \end{equation}
 Even with a generous $p_c\in[0.1,0.9]$ for every component, the right-hand side is at most $0.9^{81}\approx2\times10^{-4}$ for the active hashtag graph ($C=81$) and $0.9^{260}\approx1\times10^{-12}$ for the full graph ($C=260$). The components are not independent, so \eqref{eq:mosaic} is not a theorem about the process; it is a scale check. The simulations in Section~VI are consistent with it.
 
-\subsection{Mean-field transition at \texorpdfstring{$q=1$}{q=1}}
-Consider a well-mixed population with homogeneous weights and all nodes eligible. Let $\phi_t$ be the fraction of opinion~1. A random edge of size $s$ has $S_1\approx s\phi_t$ and $S_0\approx s(1-\phi_t)$, so
+\subsection{The complete hypergraph: an exact reduction}
+The mean-field map is usually an approximation. On a complete hypergraph it is exact for every finite $n$, which gives a clean reference case for the theory and for the code.
+
+\begin{theorem}[Complete hypergraph]\label{thm:complete}
+Let $E=\{V\}$, $\alpha_i=\alpha>0$ for all $i$, $L_i=1$, and use the node-mean rule. Write $N_t=\sum_i X_i(t)$ and $p_t=N_t/n$. Conditional on $N_t=m$,
+\begin{equation}
+N_{t+1}\sim\mathrm{Binomial}\!\left(n,\,f(m/n)\right),
+\qquad
+f(p)=\frac{p^{q}}{p^{q}+(1-p)^{q}}.
+\label{eq:binomial}
+\end{equation}
+Moreover: (i) if $q=1$, then $(p_t)$ is a martingale, $\Prob(\lim_t p_t=1)=p_0$, and the expected absorption time is finite; (ii) if $q>1$, then $f(p)>p$ for $p\in(\tfrac12,1)$ and $f(p)<p$ for $p\in(0,\tfrac12)$; (iii) if $q<1$, the two inequalities are reversed; (iv) for every $q>0$, absorption at $0$ or $n$ occurs almost surely.
+\end{theorem}
+
+\begin{proof}
+Every node belongs to the single edge, so $S_1=\alpha N_t$, $S_0=\alpha(n-N_t)$, and $\pi_e=f(N_t/n)$ for every node. The node-mean rule gives $P_i=f(N_t/n)$ for all $i$, and the $n$ Bernoulli draws are conditionally independent, which is \eqref{eq:binomial}. This proves the transition law.
+
+For the drift, write $p=p_t$ and expand $f(p)-p$:
+\begin{equation}
+f(p)-p
+=\frac{p(1-p)\left(p^{q-1}-(1-p)^{q-1}\right)}
+{p^{q}+(1-p)^{q}}.
+\label{eq:drift}
+\end{equation}
+The denominator is positive for $p\in(0,1)$. If $q>1$, then $p>1/2$ implies $p^{q-1}>(1-p)^{q-1}$, so the drift is positive; the same comparison reverses below $1/2$. For $q<1$ the exponent $q-1$ is negative and the comparison reverses. This proves (ii) and (iii).
+
+At $q=1$, $f(p)=p$, so $\E[N_{t+1}\mid N_t]=n f(N_t/n)=N_t$: $(N_t)$ is a bounded martingale and converges almost surely. From any interior state the chain can jump to $0$ or $n$ in one step with probability $(1-f)^n$ or $f^n$, both positive, so the only recurrent states are $0$ and $n$. Absorption is almost sure and the expected absorption time is finite because the state space is finite. Optional stopping at the absorption time $T$ gives $\E[N_T]=N_0$, and $N_T=n$ with probability $\Prob(p_T=1)$; hence $\Prob(p_T=1)=p_0$. This proves (i). The same positive one-step probability of hitting a boundary proves (iv).
+\end{proof}
+
+\begin{corollary}
+At $q=1$ the complete-hypergraph model is the neutral Wright--Fisher chain: the expected opinion share is conserved, the consensus probability equals the initial share, and $\mathrm{Var}(N_{t+1}\mid N_t)=n\,p_t(1-p_t)$. Its diffusion limit is $\dd p=\sqrt{p(1-p)}\,\dd W$.
+\end{corollary}
+
+The theorem turns the mean-field picture into a finite-$n$ statement on a specific graph. It also gives the implementation a case where the conditional distribution is known exactly; the repository checks the kernel and the $q=1$ absorption probability against it.
+
+\subsection{Mean-field approximation on sparse graphs}
+Theorem~\ref{thm:complete} is exact only for $E=\{V\}$. For a sparse graph, the same map is an approximation: a random edge of size $s$ has $S_1\approx s\phi_t$ and $S_0\approx s(1-\phi_t)$, so
 \begin{equation}
 \E[\phi_{t+1}\mid\phi_t]\approx f(\phi_t)
 =\frac{\phi_t^{q}}{\phi_t^{q}+(1-\phi_t)^{q}} .
@@ -209,7 +247,7 @@ We analyse four scopes: full (all 670 users), active (491 users), active with da
 To compare the three aggregation rules, we rerun the random-hypergraph design with node mean, node sample, and edge sweep, using the same replicates (8 per rule and $q$), normal latency with $\sigma=2$, and $T=100$. We also run a long-horizon check on a smaller graph ($n=30$, $m=60$, $q=2.5$, five seeds, up to 20,000 sweeps) to distinguish a slow process from a non-absorbing one.
 
 \subsection{Software and reproducibility}
-The experiments use the \texttt{hnl} package in the accompanying repository. Randomness is derived from \texttt{NumPy SeedSequence} streams; no global random state is used. The full suite is regenerated by \texttt{python -m hnl.cli reproduce}, which writes the run tables, the figures, and a manifest containing the git commit, the package versions, the data SHA-256, and the hash of every artifact. The 50 tests cover the kernel, the aggregation rules, the absorbing-state cases, latency gating, the metrics, and the statistical helpers. The original v1 code is preserved at tag \texttt{v1.0-legacy}; it is not modified.
+The experiments use the \texttt{hnl} package in the accompanying repository. Randomness is derived from \texttt{NumPy SeedSequence} streams; no global random state is used. The full suite is regenerated by \texttt{python -m hnl.cli reproduce}, which writes the run tables, the figures, and a manifest containing the git commit, the package versions, the data SHA-256, and the hash of every artifact. The 54 tests cover the kernel, the aggregation rules, the absorbing-state cases, latency gating, the metrics, and the statistical helpers. The original v1 code is preserved at tag \texttt{v1.0-legacy}; it is not modified.
 
 \section{Results}
 
@@ -340,7 +378,7 @@ The model itself is static and binary. It has no edge rewiring, no external shoc
 
 Finally, the update rule is a choice. Node mean is order independent and is the default, but it is not the only defensible aggregation. Node sample gives similar qualitative results with more noise, and the edge sweep gives a much slower process. The paper's conclusions about $q$ are stable across the two node-centred rules; the conclusions about the edge sweep are specific to that rule.
 
-\emph{Availability.} The code is released under the MIT licence and the dataset under CC0. The repository contains the package, the 50 tests, the dataset, the result CSVs, the figure scripts, and the LaTeX source of this paper. The v1 prototype and the original manuscript are preserved at tag \texttt{v1.0-legacy}. The full experiment is regenerated by \texttt{python -m hnl.cli reproduce --root .}; the run manifest records the commit, the package versions, the data SHA-256, and the hash of every artifact.
+\emph{Availability.} The code is released under the MIT licence and the dataset under CC0. The repository contains the package, the 54 tests, the dataset, the result CSVs, the figure scripts, and the LaTeX source of this paper. The v1 prototype and the original manuscript are preserved at tag \texttt{v1.0-legacy}. The full experiment is regenerated by \texttt{python -m hnl.cli reproduce --root .}; the run manifest records the commit, the package versions, the data SHA-256, and the hash of every artifact.
 
 \section{Conclusion}
 
@@ -365,7 +403,7 @@ and at $\phi=\tfrac12$ this is $q$. The symmetric state is therefore unstable fo
 The valence lexicon assigns 115 of the 191 normalised labels to positive, 54 to negative, and 22 to ambiguous. The ambiguous set includes labels such as \emph{Bittersweet}, \emph{Nostalgia}, \emph{Neutral}, and \emph{Solitude}. Users whose posts are all ambiguous are filled from the empirical positive share when data initialisation is requested; the number of such users is recorded in the manifest. The full graph contains 670 nodes and 171 hyperedges; the active graph contains 491 nodes and the same 171 hyperedges. The largest component contains 140 nodes and 45 hyperedges. The random graphs use the same edge-size range and weight distribution as the original prototype, so the comparison with the original figures is as close as the corrected semantics allow.
 
 \section{Reproducibility}
-The repository contains the package, the 50 tests, the dataset, the result CSVs, the figure scripts, and the LaTeX source of this paper. The full experiment is regenerated by
+The repository contains the package, the 54 tests, the dataset, the result CSVs, the figure scripts, and the LaTeX source of this paper. The full experiment is regenerated by
 \begin{center}
 \texttt{python -m hnl.cli reproduce --root .}
 \end{center}

@@ -22,6 +22,7 @@ opinion vector, so they do not depend on a random seed.
 | `D(t) = 1 - max(n0,n1)/n` | `hnl/metrics.py::diversity` | `tests/test_metrics.py::test_diversity_is_minority_share` |
 | `O = sd(X̄(t))` | `SimulationResult.oscillation_index` | `tests/test_metrics.py::test_oscillation_index_uses_sample_sd` |
 | Kaplan–Meier / RMST | `hnl/metrics.py` | `tests/test_metrics.py::test_kaplan_meier_and_rmst` |
+| complete-graph transition and q=1 martingale | `hnl/model.py` | `tests/test_complete_graph_theory.py` |
 | shared fixture | `hnl/model.py` | `tests/test_conformance.py` |
 
 The shared fixture covers three cases:

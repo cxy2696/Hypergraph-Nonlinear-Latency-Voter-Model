@@ -10,7 +10,7 @@ and `figures/` directories.
 ```bash
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
-python -m pytest                       # 50 checks (47 unit + 3 conformance)
+python -m pytest                       # 54 checks (47 unit + 3 conformance + 4 theorem)
 python -m hnl.cli reproduce --root .   # ≈30 s on an Apple-silicon laptop
 ```
 

@@ -310,7 +310,7 @@ opinion dynamics but of the graph's component structure.
 ## 11. Reproducibility
 
 ```bash
-python -m pytest                     # 50 checks
+python -m pytest                     # 54 checks
 python -m hnl.cli reproduce --root . # ~30 s; writes results/ and figures/
 python -m hnl.cli diagnose --csv sentimentdataset.csv --scope full
 ```

@@ -4,6 +4,27 @@ All notable changes to this repository are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow
 [Semantic Versioning](https://semver.org/).
 
+## [2.3.0] — 2026-11-12
+
+### Added
+
+- Theorem 1 in `docs/MODEL.md` and Section IV-B of the revised paper: on the
+  complete hypergraph the process reduces to the exact finite-`n` chain
+  `N_{t+1} ~ Binomial(n, f(N_t/n))`.
+- The theorem includes the q=1 martingale result (consensus probability equals
+  the initial share), the sign of the drift away from one half for q≠1, almost
+  sure absorption for every q>0, and the neutral Wright–Fisher corollary.
+- `tests/test_complete_graph_theory.py` checks the constant kernel, the drift
+  sign, and the q=1 absorption probability by simulation.
+- The paper now has 12 pages and a theorem/proof block; the test count is 54.
+
+### Changed
+
+- `docs/MODEL.md` renumbered the mean-field section and distinguishes the exact
+  complete-graph result from the sparse-graph approximation.
+- Version metadata to 2.3.0. Experiments, results, and the run manifest are
+  unchanged.
+
 ## [2.2.0] — 2026-11-12
 
 ### Changed

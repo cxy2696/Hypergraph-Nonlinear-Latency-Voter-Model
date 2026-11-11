@@ -65,8 +65,8 @@ specific set of scientific claims auditable.
 
 ## Versioning
 
-The two repositories are versioned independently. This repository is at 2.2.0
-(paper edition); OpinionLab is at 1.2.0 (engine edition). A version number in
+The two repositories are versioned independently. This repository is at 2.3.0
+(paper edition); OpinionLab is at 1.3.0 (engine edition). A version number in
 one repository says nothing about the other.
 
 ## Citation

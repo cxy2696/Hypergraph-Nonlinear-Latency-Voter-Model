@@ -250,7 +250,73 @@ threshold is not a meaningful target on the Kaggle hashtag hypergraph: the
 process converges to a mosaic whose global majority is set by how the
 components happen to break, not by a population-wide consensus tendency.
 
-### 6.2 Limits of the nonlinearity
+### 6.2 The complete hypergraph: an exact reduction
+
+The mean-field map is usually an approximation. On a complete hypergraph it is
+exact for every finite $n$, which gives a clean place to check the intuition
+and a reference case for the code.
+
+**Theorem 1 (complete hypergraph).** Let $E=\{V\}$, $\alpha_i=\alpha>0$ for all
+$i$, $L_i=1$, and use the `node_mean` rule. Write $N_t=\sum_i X_i(t)$ and
+$p_t=N_t/n$. Conditional on $N_t=m$,
+$$
+N_{t+1}\sim\mathrm{Binomial}\!\left(n,\,f(m/n)\right),
+\qquad
+f(p)=\frac{p^q}{p^q+(1-p)^q}.
+\tag{11}
+$$
+Moreover:
+
+1. if $q=1$, then $(p_t)$ is a martingale, $\Pr(\lim_t p_t=1)=p_0$, and the
+   expected absorption time is finite;
+2. if $q>1$, then $f(p)>p$ for $p\in(\tfrac12,1)$ and $f(p)<p$ for
+   $p\in(0,\tfrac12)$;
+3. if $q<1$, the two inequalities are reversed;
+4. for every $q>0$, absorption at $0$ or $n$ occurs almost surely.
+
+*Proof.* Every node belongs to the single edge, so
+$S_1=\alpha N_t$, $S_0=\alpha(n-N_t)$, and
+$\pi_e=f(N_t/n)$ for every node. The node-mean rule gives $P_i=f(N_t/n)$ for
+all $i$, and the $n$ Bernoulli draws are conditionally independent, which is
+(11). This proves the transition law.
+
+For the drift, write $p=p_t$ and use $p^q-p(p^q+(1-p)^q)$:
+$$
+f(p)-p
+=\frac{p(1-p)\left(p^{q-1}-(1-p)^{q-1}\right)}
+{p^q+(1-p)^q}.
+\tag{12}
+$$
+The denominator is positive for $p\in(0,1)$. If $q>1$, then $p>1/2$ implies
+$p^{q-1}>(1-p)^{q-1}$, so the drift is positive; the same comparison reverses
+below $1/2$. For $q<1$ the exponent $q-1$ is negative and the comparison
+reverses. This proves items 2 and 3.
+
+At $q=1$, $f(p)=p$, so
+$\mathbb{E}[N_{t+1}\mid N_t]=n f(N_t/n)=N_t$: $(N_t)$ is a bounded martingale
+and converges almost surely. From any interior state the chain can jump to
+$0$ or $n$ in one step with probability $(1-f)^n$ or $f^n$, both positive, so
+the only recurrent states are $0$ and $n$; absorption is almost sure and the
+expected absorption time is finite because the state space is finite. Optional
+stopping at the absorption time $T$ gives
+$\mathbb{E}[N_T]=N_0$, and $N_T=n$ with probability $\Pr(p_T=1)$; hence
+$\Pr(p_T=1)=p_0$. This proves item 1. Item 4 follows from the same positive
+one-step probability of hitting a boundary for every interior state. ∎
+
+**Corollary 3.** At $q=1$ the complete-hypergraph model is the neutral
+Wright–Fisher chain: the expected opinion share is conserved, the consensus
+probability equals the initial share, and
+$\mathrm{Var}(N_{t+1}\mid N_t)=n\,p_t(1-p_t)$. The diffusion limit is
+$\dd p=\sqrt{p(1-p)}\,\dd W$.
+
+The theorem is useful for two reasons. It turns the mean-field picture into a
+finite-$n$ statement on a specific graph, and it gives the code a case where the
+conditional distribution is known exactly. The repository checks both the
+kernel and the q=1 absorption probability against this result
+(`tests/test_complete_graph_theory.py`).
+
+### 6.3 Limits of the nonlinearity
+
 
 For a non-empty edge with $S_0,S_1>0$:
 
@@ -261,7 +327,7 @@ For a non-empty edge with $S_0,S_1>0$:
 * the map $q\mapsto\pi_e$ is increasing in $S_1/S_0$, and
   $\pi_e(S_0,S_1)=1-\pi_e(S_1,S_0)$ (colour symmetry).
 
-### 6.3 Mean-field
+### 6.4 Mean-field approximation on sparse graphs
 
 Consider a well-mixed population with homogeneous weights and all nodes
 eligible, and let $\phi_t$ be the fraction of 1s. Ignoring finite-size
@@ -271,14 +337,14 @@ $S_1\approx s\phi_t$ and $S_0\approx s(1-\phi_t)$, hence
 $$
 \mathbb{E}[\phi_{t+1}\mid\phi_t]\approx f(\phi_t)
 =\frac{\phi_t^q}{\phi_t^q+(1-\phi_t)^q}.
-\tag{11}
+\tag{13}
 $$
 
 $f$ has fixed points $0$, $1$, and $\tfrac12$ (for $q>0$), and
 
 $$
 f'\!\left(\tfrac12\right)=q .
-\tag{12}
+\tag{14}
 $$
 
 Thus the symmetric state is unstable for $q>1$, stable for $q<1$, and neutral
@@ -294,7 +360,7 @@ The mean-field argument does **not** apply to a fragmented hypergraph: each
 component has its own $\phi_t^{(c)}$ and its own absorbing colour, and the
 global fraction is a weighted sum of component states.
 
-### 6.4 Latency does not create sustained oscillations
+### 6.5 Latency does not create sustained oscillations
 
 Latency changes *when* a node may update, not the absorbing set: the
 eligibility condition (4) only delays updates, and every finite $L_i$ is

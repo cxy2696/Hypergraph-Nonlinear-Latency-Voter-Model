@@ -40,6 +40,8 @@ global consensus. A graph with `C` components therefore has `2^C` absorbing
 states. The stable diversity in the original figures is an absorbing mosaic,
 not a dynamical coexistence of opinions.
 
+The theory has one exact finite-`n` case. On a complete hypergraph the process reduces to a binomial chain, `N_{t+1} ~ Binomial(n, f(N_t/n))`. At `q=1` the opinion share is a martingale, so the probability of consensus on 1 equals the initial share; for `q≠1` the drift points away from or toward one half according to the sign of `q-1`. The paper states this as Theorem 1, with the proof and the neutral Wright–Fisher corollary.
+
 The revised paper is [`paper/HNL_Voter_Model_v2.pdf`](paper/HNL_Voter_Model_v2.pdf).
 The original report is kept unchanged at `HNL Voter Model.pdf`. The full
 evidence, including null results and confidence intervals, is in
@@ -53,7 +55,7 @@ cd Hypergraph-Nonlinear-Latency-Voter-Model
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 
-python -m pytest                        # 50 checks
+python -m pytest                        # 54 checks
 python -m hnl.cli reproduce --root .    # about 30 seconds
 ```
 
@@ -161,7 +163,7 @@ to catch a drift in that shared part.
   author  = {Cui, Xinyi and Yan, Leyi and Cai, Ruiying and Xiao, Chaowei},
   title   = {Hypergraph--Nonlinear--Latency Voter Model},
   year    = {2026},
-  version = {2.2.0},
+  version = {2.3.0},
   url     = {https://github.com/cxy2696/Hypergraph-Nonlinear-Latency-Voter-Model},
   note    = {Research code and reproducibility package}
 }
