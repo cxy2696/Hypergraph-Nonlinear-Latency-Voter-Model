@@ -1,0 +1,174 @@
+{
+  "name": "dataset_full",
+  "design": {
+    "name": "dataset_full",
+    "n_nodes": 100,
+    "n_edges": 200,
+    "size_range": [
+      3,
+      6
+    ],
+    "q_values": [
+      0.5,
+      1.0,
+      1.5,
+      2.5
+    ],
+    "latency_specs": [
+      {
+        "name": "fixed",
+        "dist": "fixed",
+        "mu": 5.0,
+        "sigma": 0.0,
+        "lambda_param": null
+      },
+      {
+        "name": "normal_s2",
+        "dist": "normal",
+        "mu": 5.0,
+        "sigma": 2.0,
+        "lambda_param": null
+      },
+      {
+        "name": "normal_s4",
+        "dist": "normal",
+        "mu": 5.0,
+        "sigma": 4.0,
+        "lambda_param": null
+      }
+    ],
+    "repeats": 15,
+    "max_steps": 100,
+    "consensus_threshold": 0.8,
+    "base_seed": 20260303,
+    "update_rule": "node_mean"
+  },
+  "metadata": {
+    "dataset": {
+      "path": "/Users/xinyi/Documents/deepseek-harness/default-workspace/hnl-upstream/sentimentdataset.csv",
+      "sha256": "725c6f7bc928c2bf741094f37078024b305982523fe6d0b8cb20a6cf5275c63b",
+      "bytes": 170776,
+      "rows": 732,
+      "mapping": "valence",
+      "scope": "full",
+      "min_edge_size": 2,
+      "n_users_total": 670,
+      "n_users_kept": 670,
+      "n_edges": 171,
+      "n_edges_dropped_small": 802,
+      "n_duplicate_edges_removed": 2,
+      "n_hashtag_groups": 975,
+      "valence_post_counts": {
+        "positive": 450,
+        "negative": 179,
+        "unmapped": 103
+      },
+      "n_users_with_valence": 576,
+      "n_users_unmapped": 94,
+      "positive_share_mapped": 0.6996527777777778,
+      "platform_counts": {
+        "Instagram": 258,
+        "Twitter": 243,
+        "Facebook": 231
+      },
+      "top_hashtags": [
+        [
+          "serenity",
+          15
+        ],
+        [
+          "gratitude",
+          13
+        ],
+        [
+          "excitement",
+          13
+        ],
+        [
+          "despair",
+          11
+        ],
+        [
+          "nostalgia",
+          11
+        ],
+        [
+          "contentment",
+          10
+        ],
+        [
+          "curiosity",
+          10
+        ],
+        [
+          "awe",
+          9
+        ],
+        [
+          "grief",
+          9
+        ],
+        [
+          "loneliness",
+          9
+        ]
+      ],
+      "hashtag_group_size_counts": {
+        "1": 802,
+        "2": 88,
+        "3": 32,
+        "4": 20,
+        "5": 9,
+        "6": 8,
+        "7": 2,
+        "8": 6,
+        "9": 3,
+        "11": 2,
+        "12": 2,
+        "15": 1
+      },
+      "n_distinct_labels": 191,
+      "n_distinct_labels_mapped": 169,
+      "hypergraph": {
+        "n_nodes": 670,
+        "n_edges": 171,
+        "n_edges_raw": 171,
+        "mean_edge_size": 3.456140350877193,
+        "min_edge_size": 2,
+        "max_edge_size": 15,
+        "n_components": 260,
+        "n_singleton_components": 179,
+        "largest_component": 140,
+        "largest_component_share": 0.208955223880597,
+        "covered_nodes": 491,
+        "coverage": 0.7328358208955223,
+        "isolated_nodes": 179,
+        "mean_degree_covered": 1.2036659877800406,
+        "max_degree": 4,
+        "mean_node_weight": 0.5362624378109453,
+        "total_node_weight": 359.29583333333335
+      }
+    },
+    "init": "random",
+    "hypergraph": {
+      "n_nodes": 670,
+      "n_edges": 171,
+      "n_edges_raw": 171,
+      "mean_edge_size": 3.456140350877193,
+      "min_edge_size": 2,
+      "max_edge_size": 15,
+      "n_components": 260,
+      "n_singleton_components": 179,
+      "largest_component": 140,
+      "largest_component_share": 0.208955223880597,
+      "covered_nodes": 491,
+      "coverage": 0.7328358208955223,
+      "isolated_nodes": 179,
+      "mean_degree_covered": 1.2036659877800406,
+      "max_degree": 4,
+      "mean_node_weight": 0.5362624378109453,
+      "total_node_weight": 359.29583333333335
+    }
+  },
+  "n_runs": 180
+}

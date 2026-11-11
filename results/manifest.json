@@ -1,0 +1,869 @@
+{
+  "created_utc": "2026-11-11T16:25:43Z",
+  "argv": [
+    "/Users/xinyi/Documents/deepseek-harness/default-workspace/hnl-upstream/hnl/cli.py",
+    "reproduce",
+    "--root",
+    ".",
+    "--csv",
+    "sentimentdataset.csv",
+    "--repeats",
+    "30",
+    "--steps",
+    "100"
+  ],
+  "git": {
+    "commit": "e0df75d017c15087bf574a711709321a46507b12",
+    "branch": "main",
+    "dirty": false
+  },
+  "environment": {
+    "python": "3.13.2",
+    "implementation": "CPython",
+    "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+    "machine": "arm64",
+    "numpy": "2.5.4",
+    "pandas": "3.1.1",
+    "matplotlib": "3.11.2"
+  },
+  "designs": {
+    "random": {
+      "name": "random",
+      "n_nodes": 100,
+      "n_edges": 200,
+      "size_range": [
+        3,
+        6
+      ],
+      "q_values": [
+        0.5,
+        1.0,
+        1.5,
+        2.5
+      ],
+      "latency_specs": [
+        {
+          "name": "fixed",
+          "dist": "fixed",
+          "mu": 5.0,
+          "sigma": 0.0,
+          "lambda_param": null
+        },
+        {
+          "name": "normal_s1",
+          "dist": "normal",
+          "mu": 5.0,
+          "sigma": 1.0,
+          "lambda_param": null
+        },
+        {
+          "name": "normal_s2",
+          "dist": "normal",
+          "mu": 5.0,
+          "sigma": 2.0,
+          "lambda_param": null
+        },
+        {
+          "name": "normal_s4",
+          "dist": "normal",
+          "mu": 5.0,
+          "sigma": 4.0,
+          "lambda_param": null
+        },
+        {
+          "name": "exponential",
+          "dist": "exponential",
+          "mu": 5.0,
+          "sigma": 0.0,
+          "lambda_param": null
+        }
+      ],
+      "repeats": 30,
+      "max_steps": 100,
+      "consensus_threshold": 0.8,
+      "base_seed": 20260101,
+      "update_rule": "node_mean"
+    },
+    "dataset_active": {
+      "name": "dataset_active",
+      "n_nodes": 100,
+      "n_edges": 200,
+      "size_range": [
+        3,
+        6
+      ],
+      "q_values": [
+        0.5,
+        1.0,
+        1.5,
+        2.5
+      ],
+      "latency_specs": [
+        {
+          "name": "fixed",
+          "dist": "fixed",
+          "mu": 5.0,
+          "sigma": 0.0,
+          "lambda_param": null
+        },
+        {
+          "name": "normal_s1",
+          "dist": "normal",
+          "mu": 5.0,
+          "sigma": 1.0,
+          "lambda_param": null
+        },
+        {
+          "name": "normal_s2",
+          "dist": "normal",
+          "mu": 5.0,
+          "sigma": 2.0,
+          "lambda_param": null
+        },
+        {
+          "name": "normal_s4",
+          "dist": "normal",
+          "mu": 5.0,
+          "sigma": 4.0,
+          "lambda_param": null
+        },
+        {
+          "name": "exponential",
+          "dist": "exponential",
+          "mu": 5.0,
+          "sigma": 0.0,
+          "lambda_param": null
+        }
+      ],
+      "repeats": 30,
+      "max_steps": 100,
+      "consensus_threshold": 0.8,
+      "base_seed": 20260202,
+      "update_rule": "node_mean"
+    },
+    "dataset_full": {
+      "name": "dataset_full",
+      "n_nodes": 100,
+      "n_edges": 200,
+      "size_range": [
+        3,
+        6
+      ],
+      "q_values": [
+        0.5,
+        1.0,
+        1.5,
+        2.5
+      ],
+      "latency_specs": [
+        {
+          "name": "fixed",
+          "dist": "fixed",
+          "mu": 5.0,
+          "sigma": 0.0,
+          "lambda_param": null
+        },
+        {
+          "name": "normal_s2",
+          "dist": "normal",
+          "mu": 5.0,
+          "sigma": 2.0,
+          "lambda_param": null
+        },
+        {
+          "name": "normal_s4",
+          "dist": "normal",
+          "mu": 5.0,
+          "sigma": 4.0,
+          "lambda_param": null
+        }
+      ],
+      "repeats": 15,
+      "max_steps": 100,
+      "consensus_threshold": 0.8,
+      "base_seed": 20260303,
+      "update_rule": "node_mean"
+    },
+    "dataset_lcc": {
+      "name": "dataset_lcc",
+      "n_nodes": 100,
+      "n_edges": 200,
+      "size_range": [
+        3,
+        6
+      ],
+      "q_values": [
+        0.5,
+        1.0,
+        1.5,
+        2.5
+      ],
+      "latency_specs": [
+        {
+          "name": "fixed",
+          "dist": "fixed",
+          "mu": 5.0,
+          "sigma": 0.0,
+          "lambda_param": null
+        },
+        {
+          "name": "normal_s2",
+          "dist": "normal",
+          "mu": 5.0,
+          "sigma": 2.0,
+          "lambda_param": null
+        },
+        {
+          "name": "normal_s4",
+          "dist": "normal",
+          "mu": 5.0,
+          "sigma": 4.0,
+          "lambda_param": null
+        }
+      ],
+      "repeats": 15,
+      "max_steps": 100,
+      "consensus_threshold": 0.8,
+      "base_seed": 20260404,
+      "update_rule": "node_mean"
+    },
+    "dataset_datainit": {
+      "name": "dataset_datainit",
+      "n_nodes": 100,
+      "n_edges": 200,
+      "size_range": [
+        3,
+        6
+      ],
+      "q_values": [
+        0.5,
+        1.0,
+        1.5,
+        2.5
+      ],
+      "latency_specs": [
+        {
+          "name": "fixed",
+          "dist": "fixed",
+          "mu": 5.0,
+          "sigma": 0.0,
+          "lambda_param": null
+        },
+        {
+          "name": "normal_s4",
+          "dist": "normal",
+          "mu": 5.0,
+          "sigma": 4.0,
+          "lambda_param": null
+        }
+      ],
+      "repeats": 15,
+      "max_steps": 100,
+      "consensus_threshold": 0.8,
+      "base_seed": 20260505,
+      "update_rule": "node_mean"
+    },
+    "rule_sensitivity": {
+      "name": "random",
+      "n_nodes": 100,
+      "n_edges": 200,
+      "size_range": [
+        3,
+        6
+      ],
+      "q_values": [
+        0.5,
+        1.0,
+        1.5,
+        2.5
+      ],
+      "latency_specs": [
+        {
+          "name": "fixed",
+          "dist": "fixed",
+          "mu": 5.0,
+          "sigma": 0.0,
+          "lambda_param": null
+        },
+        {
+          "name": "normal_s1",
+          "dist": "normal",
+          "mu": 5.0,
+          "sigma": 1.0,
+          "lambda_param": null
+        },
+        {
+          "name": "normal_s2",
+          "dist": "normal",
+          "mu": 5.0,
+          "sigma": 2.0,
+          "lambda_param": null
+        },
+        {
+          "name": "normal_s4",
+          "dist": "normal",
+          "mu": 5.0,
+          "sigma": 4.0,
+          "lambda_param": null
+        },
+        {
+          "name": "exponential",
+          "dist": "exponential",
+          "mu": 5.0,
+          "sigma": 0.0,
+          "lambda_param": null
+        }
+      ],
+      "repeats": 8,
+      "max_steps": 100,
+      "consensus_threshold": 0.8,
+      "base_seed": 20260101,
+      "update_rule": "node_mean",
+      "rules": [
+        "node_mean",
+        "node_sample",
+        "edge_sweep"
+      ],
+      "latency_spec": "normal_s2"
+    }
+  },
+  "datasets": {
+    "full": {
+      "path": "/Users/xinyi/Documents/deepseek-harness/default-workspace/hnl-upstream/sentimentdataset.csv",
+      "sha256": "725c6f7bc928c2bf741094f37078024b305982523fe6d0b8cb20a6cf5275c63b",
+      "bytes": 170776,
+      "rows": 732,
+      "mapping": "valence",
+      "scope": "full",
+      "min_edge_size": 2,
+      "n_users_total": 670,
+      "n_users_kept": 670,
+      "n_edges": 171,
+      "n_edges_dropped_small": 802,
+      "n_duplicate_edges_removed": 2,
+      "n_hashtag_groups": 975,
+      "valence_post_counts": {
+        "positive": 450,
+        "negative": 179,
+        "unmapped": 103
+      },
+      "n_users_with_valence": 576,
+      "n_users_unmapped": 94,
+      "positive_share_mapped": 0.6996527777777778,
+      "platform_counts": {
+        "Instagram": 258,
+        "Twitter": 243,
+        "Facebook": 231
+      },
+      "top_hashtags": [
+        [
+          "serenity",
+          15
+        ],
+        [
+          "gratitude",
+          13
+        ],
+        [
+          "excitement",
+          13
+        ],
+        [
+          "despair",
+          11
+        ],
+        [
+          "nostalgia",
+          11
+        ],
+        [
+          "contentment",
+          10
+        ],
+        [
+          "curiosity",
+          10
+        ],
+        [
+          "awe",
+          9
+        ],
+        [
+          "grief",
+          9
+        ],
+        [
+          "loneliness",
+          9
+        ]
+      ],
+      "hashtag_group_size_counts": {
+        "1": 802,
+        "2": 88,
+        "3": 32,
+        "4": 20,
+        "5": 9,
+        "6": 8,
+        "7": 2,
+        "8": 6,
+        "9": 3,
+        "11": 2,
+        "12": 2,
+        "15": 1
+      },
+      "n_distinct_labels": 191,
+      "n_distinct_labels_mapped": 169,
+      "hypergraph": {
+        "n_nodes": 670,
+        "n_edges": 171,
+        "n_edges_raw": 171,
+        "mean_edge_size": 3.456140350877193,
+        "min_edge_size": 2,
+        "max_edge_size": 15,
+        "n_components": 260,
+        "n_singleton_components": 179,
+        "largest_component": 140,
+        "largest_component_share": 0.208955223880597,
+        "covered_nodes": 491,
+        "coverage": 0.7328358208955223,
+        "isolated_nodes": 179,
+        "mean_degree_covered": 1.2036659877800406,
+        "max_degree": 4,
+        "mean_node_weight": 0.5362624378109453,
+        "total_node_weight": 359.29583333333335
+      }
+    },
+    "active": {
+      "path": "/Users/xinyi/Documents/deepseek-harness/default-workspace/hnl-upstream/sentimentdataset.csv",
+      "sha256": "725c6f7bc928c2bf741094f37078024b305982523fe6d0b8cb20a6cf5275c63b",
+      "bytes": 170776,
+      "rows": 732,
+      "mapping": "valence",
+      "scope": "active",
+      "min_edge_size": 2,
+      "n_users_total": 670,
+      "n_users_kept": 491,
+      "n_edges": 171,
+      "n_edges_dropped_small": 802,
+      "n_duplicate_edges_removed": 2,
+      "n_hashtag_groups": 975,
+      "valence_post_counts": {
+        "positive": 450,
+        "negative": 179,
+        "unmapped": 103
+      },
+      "n_users_with_valence": 422,
+      "n_users_unmapped": 69,
+      "positive_share_mapped": 0.6706161137440758,
+      "platform_counts": {
+        "Instagram": 258,
+        "Twitter": 243,
+        "Facebook": 231
+      },
+      "top_hashtags": [
+        [
+          "serenity",
+          15
+        ],
+        [
+          "gratitude",
+          13
+        ],
+        [
+          "excitement",
+          13
+        ],
+        [
+          "despair",
+          11
+        ],
+        [
+          "nostalgia",
+          11
+        ],
+        [
+          "contentment",
+          10
+        ],
+        [
+          "curiosity",
+          10
+        ],
+        [
+          "awe",
+          9
+        ],
+        [
+          "grief",
+          9
+        ],
+        [
+          "loneliness",
+          9
+        ]
+      ],
+      "hashtag_group_size_counts": {
+        "1": 802,
+        "2": 88,
+        "3": 32,
+        "4": 20,
+        "5": 9,
+        "6": 8,
+        "7": 2,
+        "8": 6,
+        "9": 3,
+        "11": 2,
+        "12": 2,
+        "15": 1
+      },
+      "n_distinct_labels": 191,
+      "n_distinct_labels_mapped": 169,
+      "hypergraph": {
+        "n_nodes": 491,
+        "n_edges": 171,
+        "n_edges_raw": 171,
+        "mean_edge_size": 3.456140350877193,
+        "min_edge_size": 2,
+        "max_edge_size": 15,
+        "n_components": 81,
+        "n_singleton_components": 0,
+        "largest_component": 140,
+        "largest_component_share": 0.285132382892057,
+        "covered_nodes": 491,
+        "coverage": 1.0,
+        "isolated_nodes": 0,
+        "mean_degree_covered": 1.2036659877800406,
+        "max_degree": 4,
+        "mean_node_weight": 0.515724711473184,
+        "total_node_weight": 253.22083333333336
+      }
+    },
+    "lcc": {
+      "path": "/Users/xinyi/Documents/deepseek-harness/default-workspace/hnl-upstream/sentimentdataset.csv",
+      "sha256": "725c6f7bc928c2bf741094f37078024b305982523fe6d0b8cb20a6cf5275c63b",
+      "bytes": 170776,
+      "rows": 732,
+      "mapping": "valence",
+      "scope": "subgraph:140",
+      "min_edge_size": 2,
+      "n_users_total": 670,
+      "n_users_kept": 491,
+      "n_edges": 171,
+      "n_edges_dropped_small": 802,
+      "n_duplicate_edges_removed": 2,
+      "n_hashtag_groups": 975,
+      "valence_post_counts": {
+        "positive": 450,
+        "negative": 179,
+        "unmapped": 103
+      },
+      "n_users_with_valence": 422,
+      "n_users_unmapped": 69,
+      "positive_share_mapped": 0.6706161137440758,
+      "platform_counts": {
+        "Instagram": 258,
+        "Twitter": 243,
+        "Facebook": 231
+      },
+      "top_hashtags": [
+        [
+          "serenity",
+          15
+        ],
+        [
+          "gratitude",
+          13
+        ],
+        [
+          "excitement",
+          13
+        ],
+        [
+          "despair",
+          11
+        ],
+        [
+          "nostalgia",
+          11
+        ],
+        [
+          "contentment",
+          10
+        ],
+        [
+          "curiosity",
+          10
+        ],
+        [
+          "awe",
+          9
+        ],
+        [
+          "grief",
+          9
+        ],
+        [
+          "loneliness",
+          9
+        ]
+      ],
+      "hashtag_group_size_counts": {
+        "1": 802,
+        "2": 88,
+        "3": 32,
+        "4": 20,
+        "5": 9,
+        "6": 8,
+        "7": 2,
+        "8": 6,
+        "9": 3,
+        "11": 2,
+        "12": 2,
+        "15": 1
+      },
+      "n_distinct_labels": 191,
+      "n_distinct_labels_mapped": 169,
+      "hypergraph": {
+        "n_nodes": 140,
+        "n_edges": 45,
+        "n_edges_raw": 45,
+        "mean_edge_size": 4.155555555555556,
+        "min_edge_size": 2,
+        "max_edge_size": 15,
+        "n_components": 1,
+        "n_singleton_components": 0,
+        "largest_component": 140,
+        "largest_component_share": 1.0,
+        "covered_nodes": 140,
+        "coverage": 1.0,
+        "isolated_nodes": 0,
+        "mean_degree_covered": 1.3357142857142856,
+        "max_degree": 4,
+        "mean_node_weight": 0.5557837301587301,
+        "total_node_weight": 77.8097222222222
+      }
+    }
+  },
+  "artifacts": [
+    {
+      "path": "figures/fig1_diversity.pdf",
+      "bytes": 32503,
+      "sha256": "e9da23174cef2109e38ecb45bd4a67e2791f9e320d18d84f2536767a3f3e98a4"
+    },
+    {
+      "path": "figures/fig1_diversity.png",
+      "bytes": 201555,
+      "sha256": "798ec989d33229a5a3c5555ee9a4b395f6f0eb2731530ce7d32ec1658d13abdc"
+    },
+    {
+      "path": "figures/fig2_consensus_km.pdf",
+      "bytes": 18666,
+      "sha256": "9abe18da9b94c52ae7ee8ed6c1005f1820305495030d1b2214ce1cabd52fd87b"
+    },
+    {
+      "path": "figures/fig2_consensus_km.png",
+      "bytes": 61920,
+      "sha256": "52afd4d9d4324bc5aed903fe152f46906185426a2f469032674382e7e42dadf9"
+    },
+    {
+      "path": "figures/fig3_oscillation.pdf",
+      "bytes": 33628,
+      "sha256": "2aea41536c380995292b3b89941383c86b6ca978210ff407a533b6d2a97c3f2b"
+    },
+    {
+      "path": "figures/fig3_oscillation.png",
+      "bytes": 335718,
+      "sha256": "ea8d011e25b971eb1bc2883d948edd81fd688c01f1e5f3792c1ea866640f7a24"
+    },
+    {
+      "path": "figures/fig4_cascade.pdf",
+      "bytes": 21481,
+      "sha256": "8a74e99155ee6500ef290046b2cfe198168316c062f91879e76765b0dd5b779d"
+    },
+    {
+      "path": "figures/fig4_cascade.png",
+      "bytes": 98757,
+      "sha256": "10df41a5c566ead4250f160f13debb8725ff32532ec37c61d9d8f15be3c9417d"
+    },
+    {
+      "path": "figures/fig5_dataset_structure.pdf",
+      "bytes": 24948,
+      "sha256": "f1859916192a0ba6d6e6a927a56ac86b95c149e7f69fadac930e2846210c5ee8"
+    },
+    {
+      "path": "figures/fig5_dataset_structure.png",
+      "bytes": 144074,
+      "sha256": "db43fab0000bea53b9ab1c0cf719a574fdd61b2fcd75b1338679ce52784358d2"
+    },
+    {
+      "path": "figures/fig6_dataset_dynamics.pdf",
+      "bytes": 30017,
+      "sha256": "0925fa0f346b2ae6db8d0111d2566f2ad271c4071e851439bd0476e587f70167"
+    },
+    {
+      "path": "figures/fig6_dataset_dynamics.png",
+      "bytes": 156286,
+      "sha256": "ad62c113ab95ced22aaa7494b52bedf494f54919fb46ccedf944567c4fb5884c"
+    },
+    {
+      "path": "figures/fig7_update_rules.pdf",
+      "bytes": 23681,
+      "sha256": "5163cbc544c866d638edd159b4d731a0853cec57f7e8c2cdedd98bab5ad5b7dc"
+    },
+    {
+      "path": "figures/fig7_update_rules.png",
+      "bytes": 97687,
+      "sha256": "7672f8ada9a37e41458fc41f3c061f5405c0bfe34b9788c81dcbf6e79483eb38"
+    },
+    {
+      "path": "results/TABLES.md",
+      "bytes": 25158,
+      "sha256": "c5f478869933bc6a5d870886e6d6d13151ec9332b9fd4ae9d37f49afb8128733"
+    },
+    {
+      "path": "results/dataset_active_design.json",
+      "bytes": 4124,
+      "sha256": "b39a801b5beb618eee3e1feb496bb22a73b54e05a71212908d7802cec9dc460b"
+    },
+    {
+      "path": "results/dataset_active_runs.csv",
+      "bytes": 336063,
+      "sha256": "a2b1838d9f087ef4dc8f57c517dccdc89af9e515b63c75f4a68d19f24df1d10d"
+    },
+    {
+      "path": "results/dataset_active_trajectories.npz",
+      "bytes": 176435,
+      "sha256": "a9982dce0c2b748d857b8e605d46bea5923c154b85a0eff484a6baa614401114"
+    },
+    {
+      "path": "results/dataset_datainit_design.json",
+      "bytes": 3693,
+      "sha256": "9b283b477c0ce287e0ab4ecdcbaf574bab3f985bc8fca7f02b3cda404902c92c"
+    },
+    {
+      "path": "results/dataset_datainit_runs.csv",
+      "bytes": 66111,
+      "sha256": "8a39d681e41b808b26afaaa28004385beac6be1e76a26c0d1b7118fe3283a449"
+    },
+    {
+      "path": "results/dataset_datainit_trajectories.npz",
+      "bytes": 38433,
+      "sha256": "276171551eef97d1e82c1c40746dd673e56262d73994a74c3acbd845d52f7ab2"
+    },
+    {
+      "path": "results/dataset_full_design.json",
+      "bytes": 3869,
+      "sha256": "c4678679f967a059fca3460eb7bf8d487b5d84ac3136aceb00ea2f1d2a24438f"
+    },
+    {
+      "path": "results/dataset_full_runs.csv",
+      "bytes": 103200,
+      "sha256": "58cd4a8a85e14e9001f075b9202b12f0e1489fecbf258dd88cb0d14270bd0160"
+    },
+    {
+      "path": "results/dataset_full_trajectories.npz",
+      "bytes": 62715,
+      "sha256": "63fae64e8c976a87eeb48e6e205364b8dfe23df49979050211694bc6c3edc2d7"
+    },
+    {
+      "path": "results/dataset_lcc_design.json",
+      "bytes": 3797,
+      "sha256": "647ddbc05e944ef17397213ce602f47f496ebbeb897861b2a564094ef4cdc615"
+    },
+    {
+      "path": "results/dataset_lcc_runs.csv",
+      "bytes": 91709,
+      "sha256": "c026137e02ae0ceba78a55005a5d684466b4e649ddfe1d5f1af9254ccb9b1a82"
+    },
+    {
+      "path": "results/dataset_lcc_trajectories.npz",
+      "bytes": 46401,
+      "sha256": "05c841197c28aa742cfbb17adbd2785f516cefae184d68224573d9c773e91f71"
+    },
+    {
+      "path": "results/diagnostics.json",
+      "bytes": 1969,
+      "sha256": "8058cf540fafa87ea2bbb3661acc96615894b9864fd3e83686179fa7981828f1"
+    },
+    {
+      "path": "results/diagnostics.md",
+      "bytes": 802,
+      "sha256": "288288e4392c11642df106087cdf8aa3d1e03c0b1a3d59fd7849aebd3df8ffd5"
+    },
+    {
+      "path": "results/edge_sweep_longrun.csv",
+      "bytes": 887,
+      "sha256": "c40b29abae74d927866561c7920160366ce939028bb543722852d817d0cd8a6c"
+    },
+    {
+      "path": "results/random_design.json",
+      "bytes": 1165,
+      "sha256": "83493363d9cba3591886ada84c6c42b7b8b5f2b4e30d35b3be4ac7b33b561682"
+    },
+    {
+      "path": "results/random_rule_sensitivity_design.json",
+      "bytes": 1252,
+      "sha256": "80d3b677ec7514e49f32403d39940aabc9117a47fd9b1778fe2c2ba7d9af23aa"
+    },
+    {
+      "path": "results/random_rule_sensitivity_runs.csv",
+      "bytes": 38069,
+      "sha256": "7ffb933e2652891289e24e2300df398f37c979372b94531bc812f19477616b8b"
+    },
+    {
+      "path": "results/random_rule_sensitivity_trajectories.npz",
+      "bytes": 22,
+      "sha256": "8739c76e681f900923b900c9df0ef75cf421d39cabb54650c4b9ad19b6a76d85"
+    },
+    {
+      "path": "results/random_runs.csv",
+      "bytes": 233293,
+      "sha256": "d24be428563199a10f3cf316508f959b9002ed5bbc59daafa2ba33a1a1f2cfa5"
+    },
+    {
+      "path": "results/random_trajectories.npz",
+      "bytes": 118479,
+      "sha256": "2f33eaa5dd812c1da5b46493b03b600b535a963660ea6cf2e928433d0d90e541"
+    },
+    {
+      "path": "results/tables/damping.csv",
+      "bytes": 3266,
+      "sha256": "16b1ee0dc4584032ac2e79895feee090d522d1b3a0d9cc42c5bffed70a18e6a9"
+    },
+    {
+      "path": "results/tables/dataset_cells.csv",
+      "bytes": 40011,
+      "sha256": "2d6c3954075f81de297e1a7b12a163149734fff9c8c8386c07a998d8e5cbc21a"
+    },
+    {
+      "path": "results/tables/dataset_q_contrasts.csv",
+      "bytes": 14896,
+      "sha256": "29febdfb377703f115bfd1ecc80937722f5b09f769f31bc24bf5bb57939ef46d"
+    },
+    {
+      "path": "results/tables/dataset_structure.csv",
+      "bytes": 429,
+      "sha256": "70c4fb9aea38a9ac1529226c17ff5694b5d9373ee8afa14cbad437202c0ebd39"
+    },
+    {
+      "path": "results/tables/random_cells.csv",
+      "bytes": 14860,
+      "sha256": "ebdfbc7437fa2fc460e17066bde06d9f2935bb44f2dab6cfa91e06ed40c2c4cc"
+    },
+    {
+      "path": "results/tables/random_latency_contrasts.csv",
+      "bytes": 7945,
+      "sha256": "bf1412ca620851fb897a70837ae492e82b01ef018a13fa665f9a735690c61150"
+    },
+    {
+      "path": "results/tables/random_q_contrasts.csv",
+      "bytes": 10017,
+      "sha256": "72279578d0ffa3dee3d318a43c8732745dd023c039552e6d49bf8ab78103182c"
+    },
+    {
+      "path": "results/tables/rule_sensitivity.csv",
+      "bytes": 8134,
+      "sha256": "edb538bb22f00930e48d5b86f7c13c3e406123e5bc21457b6501c21a6bf91d12"
+    }
+  ]
+}

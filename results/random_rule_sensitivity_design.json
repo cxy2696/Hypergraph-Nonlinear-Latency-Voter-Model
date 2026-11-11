@@ -1,0 +1,68 @@
+{
+  "name": "random_rule_sensitivity",
+  "design": {
+    "name": "random",
+    "n_nodes": 100,
+    "n_edges": 200,
+    "size_range": [
+      3,
+      6
+    ],
+    "q_values": [
+      0.5,
+      1.0,
+      1.5,
+      2.5
+    ],
+    "latency_specs": [
+      {
+        "name": "fixed",
+        "dist": "fixed",
+        "mu": 5.0,
+        "sigma": 0.0,
+        "lambda_param": null
+      },
+      {
+        "name": "normal_s1",
+        "dist": "normal",
+        "mu": 5.0,
+        "sigma": 1.0,
+        "lambda_param": null
+      },
+      {
+        "name": "normal_s2",
+        "dist": "normal",
+        "mu": 5.0,
+        "sigma": 2.0,
+        "lambda_param": null
+      },
+      {
+        "name": "normal_s4",
+        "dist": "normal",
+        "mu": 5.0,
+        "sigma": 4.0,
+        "lambda_param": null
+      },
+      {
+        "name": "exponential",
+        "dist": "exponential",
+        "mu": 5.0,
+        "sigma": 0.0,
+        "lambda_param": null
+      }
+    ],
+    "repeats": 8,
+    "max_steps": 100,
+    "consensus_threshold": 0.8,
+    "base_seed": 20260101,
+    "update_rule": "node_mean",
+    "rules": [
+      "node_mean",
+      "node_sample",
+      "edge_sweep"
+    ],
+    "latency_spec": "normal_s2"
+  },
+  "metadata": {},
+  "n_runs": 96
+}
