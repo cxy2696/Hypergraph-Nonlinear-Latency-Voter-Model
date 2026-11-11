@@ -31,14 +31,15 @@
 <body>
 <main>
   <h1>Hypergraph–Nonlinear–Latency Voter Model</h1>
-  <p class="sub">超图–非线性–时延 Voter 模型 · v2.0.0</p>
+  <p class="sub">Research repository · version 2.2.0</p>
 
   <p class="lede">A tested reference implementation of the HNL voter model and a
   reproducible re-analysis of its claims: group interactions on hypergraphs, a
   nonlinear adoption exponent <em>q</em>, and heterogeneous reaction latencies.</p>
 
   <div class="grid">
-    <div class="card"><b>Paper</b><a href="HNL%20Voter%20Model.pdf">Original manuscript (PDF)</a></div>
+    <div class="card"><b>Revised paper</b><a href="paper/HNL_Voter_Model_v2.pdf">Corrected edition (PDF)</a></div>
+    <div class="card"><b>Original</b><a href="HNL%20Voter%20Model.pdf">Original manuscript (PDF)</a></div>
     <div class="card"><b>Code</b><a href="https://github.com/cxy2696/Hypergraph-Nonlinear-Latency-Voter-Model">GitHub repository</a></div>
     <div class="card"><b>Model</b><a href="https://github.com/cxy2696/Hypergraph-Nonlinear-Latency-Voter-Model/blob/main/docs/MODEL.md">Formal specification</a></div>
     <div class="card"><b>Evidence</b><a href="https://github.com/cxy2696/Hypergraph-Nonlinear-Latency-Voter-Model/blob/main/docs/RESULTS.md">Results and claim ledger</a></div>
@@ -47,17 +48,18 @@
   </div>
 
   <div class="note">
-    <b>Headline result.</b> The nonlinear mechanism is robust: 80 % consensus is
-    reached in 0 % of runs at <em>q</em>=0.5 and 87–100 % at <em>q</em>=2.5. The
-    latency claim is regime-dependent, oscillations are transient, and the
-    Kaggle hashtag graph is too fragmented for population-level consensus
-    (0 of 900 runs, largest final majority 0.754).
+    The paper reports a reanalysis, not a new model. The nonlinearity result
+    holds: 80 % consensus is reached in none of the runs at <em>q</em>=0.5 and
+    in 87–100 % at <em>q</em>=2.5. The latency effect is small and conditional;
+    oscillations damp; and the Kaggle hashtag graph is too fragmented for a
+    population-level consensus experiment (none of 900 runs, largest final
+    majority 0.754).
   </div>
 
   <img src="figures/fig1_diversity.png" alt="Opinion diversity over time for different q and latency settings">
 
   <footer>
-    Code MIT · dataset CC0 · <a href="https://github.com/cxy2696/Hypergraph-Nonlinear-Latency-Voter-Model/blob/main/README_cn.md">中文说明</a>
+    Code MIT · dataset CC0 · research repository
   </footer>
 </main>
 </body>
