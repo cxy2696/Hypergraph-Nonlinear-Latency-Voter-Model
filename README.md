@@ -47,7 +47,8 @@ The successor project includes a browser sandbox:
 [![OpinionLab demo](https://raw.githubusercontent.com/cxy2696/opinionlab/main/docs/demo.png)](https://github.com/cxy2696/opinionlab/blob/main/docs/DEMO.md)
 
 - Choose one of the 15 scenario templates (public communication, community, organizational change, product launch, research) and tune conformity `q`, latency and replicas.
-- Inspect diversity curves and group metrics with 95% confidence intervals.
+- Read three linked charts: diversity with a run-to-run band, opinion shares and cascade spikes.
+- Get a one-sentence verdict and a plain-language “how to read” note, then replay the evolution step by step.
 - Download a single-file offline report with assumptions, limitations and disclaimer.
 
 Run it locally:
