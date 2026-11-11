@@ -3,7 +3,14 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Overview
-Open-source implementation of the **Hybrid Hypergraph-Nonlinear-Latency Voter Model (HNL Voter Model)** This model extends the traditional Voter Model to incorporate group-based hypergraph interactions, nonlinear adoption probabilities (controlled by parameter `q`), and latency effects (normal or exponential distributions) for more realistic simulation of opinion dynamics on social networks.
+This repository is the research prototype for the **Hybrid Hypergraph-Nonlinear-Latency Voter Model (HNL Voter Model)** — a way to simulate how opinions spread through groups.
+
+Most opinion models treat people as talking in pairs and reacting instantly. This one adds three things that matter in real life:
+- people influence each other in **groups** (a chat, a forum, a meeting) rather than only one-to-one;
+- adoption is **non-linear** — conformity strength `q` controls how strongly a local majority pulls people in;
+- people react at **different speeds**, so a message can keep spreading long after it was posted.
+
+The prototype accompanies the paper below. For new work, use the production successor, [OpinionLab](https://github.com/cxy2696/opinionlab), which is reproducible, tested and ships a browser sandbox.
  
 > The Voter Model has long served as a fundamental framework for analyzing opinion dynamics, however, it often oversimplifies interactions as pairwise and assumes immediate responses. This study introduces the Hybrid Hypergraph-Nonlinear-Latency Voter Model (HNL Voter Model), which integrates group-based hypergraph structures, nonlinear adoption probabilities, and latency effects to better reflect the complexity of real-world opinion propagation. By simulating sentiment data from social media platforms, the model explores how network structures, nonlinear influences, and temporal delays collectively shape opinion diversity, cascading effects, and oscillatory behaviors.
 
@@ -11,6 +18,16 @@ Key features:
 - Simulates opinion diversity, cascading effects, and oscillations.
 - Supports random hypergraphs or real-world data (from Kaggle sentiment datasets).
 - Latency distributions: normal (default) or exponential.
+
+## What you can use it for
+The same model covers many group-opinion questions:
+- **Crisis communication:** when should we debunk a rumor, and how much does timing change the outcome?
+- **Community discussion:** is a group converging on a decision, or being pushed into a silent majority?
+- **Organizational change:** how do announcement cadence and reaction delays affect sentiment?
+- **Product launch / brand:** is early buzz the same as durable word of mouth?
+- **Teaching and research:** demonstrate how conformity and latency change consensus, or reproduce the classical voter-model limit.
+
+The successor project makes these concrete with 15 bilingual scenario templates, runnable examples and a browser demo.
 
 ## Production successor
 This repository is the research prototype accompanying the paper. For a reproducible,
@@ -29,7 +46,7 @@ The successor project includes a browser sandbox:
 
 [![OpinionLab demo](https://raw.githubusercontent.com/cxy2696/opinionlab/main/docs/demo.png)](https://github.com/cxy2696/opinionlab/blob/main/docs/DEMO.md)
 
-- Choose one of the 12 scenario templates and tune conformity `q`, latency and replicas.
+- Choose one of the 15 scenario templates (public communication, community, organizational change, product launch, research) and tune conformity `q`, latency and replicas.
 - Inspect diversity curves and group metrics with 95% confidence intervals.
 - Download a single-file offline report with assumptions, limitations and disclaimer.
 
@@ -42,6 +59,22 @@ make demo          # http://127.0.0.1:8000
 ```
 
 See [docs/DEMO.md](https://github.com/cxy2696/opinionlab/blob/main/docs/DEMO.md) for the API and limits.
+
+## Concrete examples
+The successor repository has runnable examples and a case guide:
+
+- [Debunk timing](https://github.com/cxy2696/opinionlab/blob/main/examples/rumor_timing.py):
+  `uv run python examples/rumor_timing.py --repeats 8`
+- [Community conformity](https://github.com/cxy2696/opinionlab/blob/main/examples/community_consensus.py):
+  `uv run python examples/community_consensus.py --repeats 6`
+- [Use cases and reading guide](https://github.com/cxy2696/opinionlab/blob/main/docs/USE_CASES.md)
+
+## Scope and limitations
+This repository is a paper prototype: results depend on hyperedge order and use global random state.
+It is kept for reference and reproduction. For anything beyond that — reproducible runs,
+confidence intervals, API/reporting, compliance guardrails — use OpinionLab.
+The model does not predict real individuals or events, and it does not model recommender
+systems, media agenda or offline behaviour.
 
 ## Paper
 Full paper: [Hypergraph-Nonlinear-Latency Voter Model.pdf](https://cxy2696.github.io/Hypergraph-Nonlinear-Latency-Voter-Model/HNL%20Voter%20Model.pdf) (From the paper: Initializes random opinions, selects pairs, copies opinions, and checks for consensus.)
