@@ -52,6 +52,7 @@ The successor project also ships a local browser sandbox:
 - Watch a 3D industrial tracker: a rotating opinion network with target lock, scan sweep and live telemetry.
 - Switch the whole UI between Chinese and English from the header.
 - Tune `q`, latency and replicas with inline explanations, hover tips and one-click presets.
+- Optionally enable a local Ollama model for assistive narration and next-experiment suggestions (off by default, never used for metrics or conclusions).
 - Read three linked charts with particle overlays: diversity flow, drifting opinion shares and cascade bursts.
 - The cockpit-style layout adapts to desktop, tablet and phone, with a system status bar and live UTC clock.
 - Get a one-sentence verdict, a plain-language “how to read” note and a **decision brief**: what the run can inform, the simulated action window (take-off, peak, majority, intervention) and concrete follow-up checks.
