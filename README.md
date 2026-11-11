@@ -42,7 +42,9 @@ service-ready implementation of the same model family, see
 The original scripts here remain unchanged so the paper's results can still be reproduced.
 
 ## Try the demo
-The successor project includes a browser sandbox:
+Open the live sandbox: **https://cxy2696.github.io/opinionlab/**
+
+The successor project also ships a local browser sandbox:
 
 [![OpinionLab demo](https://raw.githubusercontent.com/cxy2696/opinionlab/main/docs/demo.png)](https://github.com/cxy2696/opinionlab/blob/main/docs/DEMO.md)
 
